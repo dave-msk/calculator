@@ -1,5 +1,5 @@
 //Testing
-//Assignment 2
+//Assignment 2 COMP6442
 package edu.anu.comp6442.assignment2;
 
 import android.support.v7.app.AppCompatActivity;
