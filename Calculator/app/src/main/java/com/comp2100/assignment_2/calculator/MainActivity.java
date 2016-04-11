@@ -1,6 +1,4 @@
-
-//Assignment 2
-package edu.anu.comp6442.assignment2;
+package com.comp2100.assignment_2.calculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
