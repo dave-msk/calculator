@@ -22,13 +22,23 @@ public class Expression {
 		evaluated = false;
 	}
 	
-	public double evaluate(){
+	public double evaluate() throws InvalidComputationException{
 		if (evaluated)
 			return value;
 		else if (op == null)
-			value = -l.evaluate();
+			try {
+				value = -l.evaluate();
+			} catch (InvalidComputationException e) {
+				throw e;
+			}
 		else
-			value = op.compute(l.evaluate(), r.evaluate());
+			try {
+				value = op.compute(l.evaluate(), r.evaluate());
+			} catch (InvalidComputationException e) {
+				throw e;
+			} catch (Exception e) {
+				throw new InvalidComputationException();
+			}
 		evaluated = true;
 		return value;
 	}

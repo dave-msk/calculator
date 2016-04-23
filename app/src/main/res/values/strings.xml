@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Assignment2</string>
+    <string name="cancel_button">C</string>
+    <string name="blankets_button">( )</string>
+    <string name="pow_button">^</string>
+    <string name="div_button">/</string>
+    <string name="mult_button">*</string>
+    <string name="sub_button">-</string>
+    <string name="add_button">+</string>
+    <string name="eval_button">=</string>
+    <string name="neg_button">+/-</string>
+    <string name="dot_button">.</string>
+    <string name="num1_button">1</string>
+    <string name="num2_button">2</string>
+    <string name="num3_button">3</string>
+    <string name="num4_button">4</string>
+    <string name="num5_button">5</string>
+    <string name="num6_button">6</string>
+    <string name="num7_button">7</string>
+    <string name="num8_button">8</string>
+    <string name="num9_button">9</string>
+    <string name="num0_button">0</string>
+
 </resources>
