@@ -21,8 +21,12 @@ public class CalculatorParser {
 		if (components.size() == 1) {
 			if (isNumeric(expStr))
 				return new Expression(Double.parseDouble(expStr));
-			else
-				return new Expression(parse(expStr.substring(1)),null,null);
+			else if (expStr.charAt(0) == 'n'){
+                return new Expression(parse(expStr.substring(1)), null, null);
+            } else {
+                // TODO: Trigonometric functions.
+                // return new Expression(parse(expStr))
+            }
 		}
 		
 		// Scan for operators of low precedence.
@@ -138,6 +142,7 @@ public class CalculatorParser {
 		boolean hasSpace = false;
 		char prevChar = 0;
 		char currChar = 0;
+		Element currEle = null;
 		
 		for (int i = 0; i < expStr.length(); i++) {
 			
@@ -153,7 +158,7 @@ public class CalculatorParser {
 				currChar = 'n';
 			
 			Rule rule = Rule.getRule(prevChar);
-			Element currEle = Element.getElement(currChar);
+			currEle = Element.getElement(currChar);
 			if (!rule.obeysRule(currEle))
 				return false;
 			if (areNonSeparable(prevChar, currChar) && hasSpace)
@@ -179,7 +184,7 @@ public class CalculatorParser {
 				dot = false;
 			}
 		}
-		if (layer != 0)
+		if (layer != 0 || (currEle != Element.CloseBlanket && currEle != Element.Numbers))
 			return false;
 		return true;
 	}

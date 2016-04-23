@@ -2,22 +2,24 @@
 //Assignment 2 COMP6442
 package edu.anu.comp6442.assignment2;
 
-import android.os.Bundle;
+import android.os.PatternMatcher;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import parserV2.CalculatorParser;
-import parserV2.Element;
-import parserV2.InvalidComputationException;
-import parserV2.Rule;
+import calculatorParser.CalculatorParser;
+import calculatorParser.Element;
+import calculatorParser.InvalidComputationException;
+import calculatorParser.Rule;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityV1 extends AppCompatActivity {
 
     EditText exp_field;
     StringBuilder exp;
@@ -54,14 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 updateExpField();
                 break;
             case R.id.back_button:
-                // TODO: Erase the element before the cursor.
-                if (cursor > 0) {
-                    Element element = getPreviousElement2();
-                    if (element == Element.UnaryOperators) {
-                        erasePreviousElement();
-                    }
-                    erasePreviousElement();
-                }
+                if (cursor > 0)
+                    backSpace();
                 break;
             case R.id.num0_button:
             case R.id.num1_button:
@@ -87,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.pow_button:
                 // TODO: Check if eligible to put an operator at current position,
                 // TODO: ignore if ineligible, insert number otherwise.
-                addBinaryOperator(((Button) view).getText().toString());
+                addOperator(((Button)view).getText().toString());
                 break;
             case R.id.blanket_button:
                 // TODO: Check which blanket is eligible, ignore if ineligible in both cases.
@@ -101,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if (isEligible(Element.CloseBlanket) && num_blanket > 0) {
                         num_blanket--;
                         insertEntry(')');
-                    } else if (isEligible(Element.BinaryOperators)) {
+                    } else if (isEligible(Element.Operators)) {
                         num_blanket++;
                         insertEntry("*(");
                     }
@@ -109,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 evaluated = false;
                 break;
             case R.id.eval_button:
-
                 if (CalculatorParser.hasCorrectFormat(exp.toString())) {
                     try {
                         double result = CalculatorParser.parse(exp.toString()).evaluate();
@@ -209,78 +204,24 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isEligible(Element element) {
         assert(cursor > 0);
-        Rule rule = Rule.getRule(getPreviousElement());
+        char prevChar = exp.charAt(cursor-1);
+        Rule rule = Rule.getRule(prevChar);
         return rule.obeysRule(element);
     }
 
-    private Element getPreviousElement2() {
-        assert(cursor > 0);
-        int earliestIndex = cursor-1;
-        for (int i = cursor-2; i >= 0; i--) {
-            Element element = Element.getElement(exp.substring(i, cursor-1));
-            if (element != null)
-                earliestIndex = i;
-        }
-        return Element.getElement(exp.substring(earliestIndex,cursor-1));
-    }
-
-    private Element getPreviousElement() {
-        int earliestIndex = cursor;
-        for (int i = cursor-1; i >= 0; i--) {
-            Element element = Element.getElement(exp.substring(i, cursor));
-            if (element != null)
-                earliestIndex = i;
-        }
-        return Element.getElement(exp.substring(earliestIndex,cursor));
-    }
-
-    private Element getNextElement() {
-        int furtherestIndex = cursor;
-        for (int i = cursor+1; i < exp.length(); i++) {
-            Element element = Element.getElement(exp.substring(cursor,i));
-            if (element != null)
-                furtherestIndex = i;
-        }
-        return Element.getElement(exp.substring(cursor,furtherestIndex));
-    }
-
-    private void eraseNextElement() {
-        int furtherestIndex = cursor;
-        for (int i = cursor+1; i < exp.length(); i++) {
-            Element element = Element.getElement(exp.substring(cursor,i));
-            if (element != null)
-                furtherestIndex = i;
-        }
-        exp.delete(cursor,furtherestIndex);
-        updateExpField();
-    }
-
-    private void erasePreviousElement() {
-        int earliestIndex = cursor;
-        for (int i = cursor-1; i >= 0; i--) {
-            Element element = Element.getElement(exp.substring(i,cursor));
-            if (element != null)
-                earliestIndex = i;
-        }
-        exp.delete(earliestIndex,cursor);
-        cursor -= cursor - earliestIndex;
-        updateExpField();
-    }
-
-    private void addBinaryOperator(String op) {
+    private void addOperator(String op) {
         if (cursor == 0)
             return;
-        Rule prevRule = Rule.getRule(getPreviousElement());
-        if (!prevRule.obeysRule(Element.BinaryOperators))
+        char prevChar = exp.charAt(cursor-1);
+        Rule prevRule = Rule.getRule(prevChar);
+        if (!prevRule.obeysRule(Element.Operators))
             return;
         if (exp.length() > cursor) {
-            Rule currRule = Rule.BinaryOperators;
-
-            // ---------------------------
-            Element nextEle = getNextElement();
-            if (nextEle == Element.BinaryOperators)
-                eraseNextElement();
-            else if (!currRule.obeysRule(nextEle))
+            Rule currRule = Rule.Operators;
+            Element nextEle = Element.getElement(exp.charAt(cursor));
+            if (nextEle == Element.Operators)
+                backSpaceAt(cursor+1);
+            else if (!currRule.obeysRule(exp.charAt(cursor)))
                 return;
         }
         insertEntry(op);
@@ -294,22 +235,15 @@ public class MainActivity extends AppCompatActivity {
             if (prevEle == Element.CloseBlanket) {
                 insertEntry("*" + num);
                 return;
-            } else if (prevEle != Element.BinaryOperators && prevEle != null) {
+            } else if (prevEle != Element.Operators) {
                 insertEntry(num);
                 return;
             }
         }
         if (exp.length() > cursor) {
-            // char nextChar = exp.charAt(cursor);
-            int index = 0;
-            StringBuilder sbd = new StringBuilder();
-            for (int i = cursor; i < exp.length(); i++) {
-                sbd.append(exp.charAt(i));
-                if (Element.getElement(sbd.toString()) != null)
-                    index = i;
-            }
-            Element nextEle = Element.getElement(exp.substring(cursor,index+1));
-            if (nextEle == Element.OpenBlanket || nextEle == Element.UnaryOperators) {
+            char nextChar = exp.charAt(cursor);
+            Element nextEle = Element.getElement(nextChar);
+            if (nextEle == Element.OpenBlanket) {
                 insertEntry(num + "*");
                 return;
             }
@@ -319,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void negate() {
+        // Rule rule = Rule.Negate;
         boolean negateDetected = false;
         int searchCursor = 0;
         char prevChar = (cursor > 0) ? exp.charAt(cursor-1) : 0;
@@ -343,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
                 negateDetected = true;
                 continue;
             }
-            if (currEle == Element.BinaryOperators || currEle == Element.OpenBlanket) {
+            if (currEle == Element.Operators || currEle == Element.OpenBlanket) {
                 searchCursor = i+1;
                 break;
             }
