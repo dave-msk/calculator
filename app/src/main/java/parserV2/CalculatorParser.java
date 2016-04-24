@@ -13,6 +13,7 @@ public class CalculatorParser {
 		List<String> components = flatSplit(expStr);
 		
 		if (components.size() == 1) {
+			expStr = components.get(0);
 			if (isNumeric(expStr)) {
 				return new Expression(Double.parseDouble(expStr));
 			}
