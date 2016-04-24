@@ -10,28 +10,30 @@ public enum BinaryOperator {
 			return l + r;
 		}
 	}),
-	
 	SUB ("-", Precedence.Low, new BinaryComputable() {
 		@Override
 		public double compute(double l, double r) {
 			return l - r;
 		}
 	}),
-	
 	MULT ("*", Precedence.Middle, new BinaryComputable() {
 		@Override
 		public double compute(double l, double r) {
 			return l * r;
 		}
 	}),
-
 	DIV ("/", Precedence.Middle, new BinaryComputable() {
 		@Override
 		public double compute(double l, double r) {
 			return l / r;
 		}
 	}),
-	
+	MOD("%", Precedence.Middle, new BinaryComputable() {
+		@Override
+		public double compute(double l, double r) {
+			return l % r;
+		}
+	}),
 	POW ("^", Precedence.Pow, new BinaryComputable() {
 		@Override
 		public double compute(double l, double r) {
@@ -40,9 +42,11 @@ public enum BinaryOperator {
 	});
 	
 	public final BinaryComputable op;
+	public final String symbol;
 	
 	BinaryOperator(String symbol, Precedence pre, BinaryComputable op) {
 		this.op = op;
+        this.symbol = symbol;
 		Maps.symbolMap.put(symbol, this);
 		Maps.precedenceMap.put(symbol, pre);
 	}

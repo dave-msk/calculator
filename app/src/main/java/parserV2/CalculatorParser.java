@@ -24,8 +24,12 @@ public class CalculatorParser {
                 if (op != null)
                     furtherestIndex = i+1;
             }
-            UnaryOperator op = UnaryOperator.getUnaryOperator(expStr.substring(0,furtherestIndex));
-			return new Expression(parse(expStr.substring(furtherestIndex)), op.op);
+			if (furtherestIndex > 0) {
+                UnaryOperator op = UnaryOperator.getUnaryOperator(expStr.substring(0, furtherestIndex));
+                return new Expression(parse(expStr.substring(furtherestIndex)), op.op);
+            } else {
+                 return new Expression(MathConstant.getMathConstant(expStr).value);
+            }
 		}
 		
 		// Scan for the operators with low precedence.
@@ -156,8 +160,11 @@ public class CalculatorParser {
 
 		if (layer != 0)
 			return false;
-		if (prevElement != Element.Numbers && prevElement != Element.CloseBlanket)
+		if (prevElement != Element.Numbers && prevElement != Element.CloseBlanket
+                && prevElement != Element.MathConst)
 			return false;
+        if (furtherestIndex != expStr.length()-1)
+            return false;
 		return true;
 	}
 	

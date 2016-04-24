@@ -13,6 +13,12 @@ public enum UnaryOperator {
 			return -d;
 		}
 	}),
+	SQRT("sqrt", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.sqrt(d);
+		}
+	}),
 	SIN("sin", Precedence.High, new UnaryComputable() {
 		@Override
 		public double compute(double d) {
@@ -31,6 +37,24 @@ public enum UnaryOperator {
 			return Math.tan(Math.toRadians(d));
 		}
 	}),
+	SINH("sinh", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.sinh(d);
+		}
+	}),
+	COSH("cosh", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.cosh(d);
+		}
+	}),
+	TANH("tanh", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.tanh(d);
+		}
+	}),
 	LOG("log", Precedence.High, new UnaryComputable() {
 		@Override
 		public double compute(double d) {
@@ -42,12 +66,26 @@ public enum UnaryOperator {
 		public double compute(double d) {
 			return Math.exp(d);
 		}
+	}),
+	SIG("sig", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return 1 /(1+Math.exp(-d));
+		}
+	}),
+	ABS("abs", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.abs(d);
+		}
 	});
 	
 	public final UnaryComputable op;
+    public final String symbol;
 	
 	UnaryOperator(String symbol, Precedence pre, UnaryComputable op) {
 		this.op = op;
+        this.symbol = symbol;
 		Maps.symbolMap.put(symbol, this);
 		Maps.precedenceMap.put(symbol, pre);
 	}

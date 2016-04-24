@@ -6,14 +6,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public enum Rule {
-	OpenBlanket(Element.OpenBlanket, new Element[] {Element.OpenBlanket, Element.Numbers, Element.Dot, Element.Negate, Element.UnaryOperators}),
+	OpenBlanket(Element.OpenBlanket, new Element[] {Element.OpenBlanket, Element.Numbers, Element.Dot, Element.Negate, Element.UnaryOperators, Element.MathConst}),
 	CloseBlanket(Element.CloseBlanket, new Element[] {Element.CloseBlanket, Element.BinaryOperators}), 
 	UnaryOperators(Element.UnaryOperators, new Element[] {Element.OpenBlanket}),
-	BinaryOperators(Element.BinaryOperators, new Element[] {Element.OpenBlanket,Element.Numbers,Element.Dot,Element.UnaryOperators}),
+	BinaryOperators(Element.BinaryOperators, new Element[] {Element.OpenBlanket,Element.Numbers,Element.Dot,Element.UnaryOperators, Element.MathConst}),
 	Numbers(Element.Numbers, new Element[] {Element.CloseBlanket,Element.BinaryOperators,Element.Dot, Element.Numbers}),
-	Negate(Element.Negate, new Element[] {Element.OpenBlanket,Element.Dot, Element.Numbers, Element.UnaryOperators}),
+	MathConst(Element.MathConst, new Element[] {Element.CloseBlanket, Element.BinaryOperators}),
+	Negate(Element.Negate, new Element[] {Element.OpenBlanket,Element.Dot, Element.Numbers, Element.UnaryOperators, Element.MathConst}),
 	Dot(Element.Dot, Element.Numbers),
-    Start(Element.Start, new Element[]{Element.OpenBlanket, Element.Numbers, Element.Negate,Element.Dot,Element.UnaryOperators}),
+    Start(Element.Start, new Element[]{Element.OpenBlanket, Element.Numbers, Element.Negate,Element.Dot,Element.UnaryOperators, Element.MathConst}),
 	Null(Element.Null);
 	
 	private Set<Element> rule = new HashSet<>();

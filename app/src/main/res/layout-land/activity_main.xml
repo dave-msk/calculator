@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30.68"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:id="@+id/expression_field"
+        android:background="@android:color/transparent"
+        android:textSize="40sp"
+        android:gravity="end"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10.67"
+        android:gravity="center_vertical">
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/pad_space_right"
+            android:layout_alignParentRight="true"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/pad_space_right"
+            android:background="@mipmap/ic_backspace_black_36dp"
+            android:id="@+id/back_button"
+            android:onClick="typeEntry"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11.73">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/history_button"
+            android:textSize="10sp"
+            android:id="@+id/history_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/mod_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/mod_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/sqrt_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/sqrt_button"
+            android:onClick="typeEntry"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.63"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/cancel_button"
+            android:textSize="10sp"
+            android:id="@+id/cancel_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/blankets_button"
+            android:textSize="10sp"
+            android:id="@+id/blanket_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/pow_button"
+            android:textSize="10sp"
+            android:id="@+id/pow_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/div_button"
+            android:textSize="10sp"
+            android:id="@+id/div_button"
+            android:onClick="typeEntry"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11.73">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/sin_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/sin_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/cos_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/cos_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/tan_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/tan_button"
+            android:onClick="typeEntry"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.63"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num7_button"
+            android:textSize="10sp"
+            android:id="@+id/num7_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num8_button"
+            android:textSize="10sp"
+            android:id="@+id/num8_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num9_button"
+            android:textSize="10sp"
+            android:id="@+id/num9_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/mult_button"
+            android:textSize="10sp"
+            android:id="@+id/mult_button"
+            android:onClick="typeEntry"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11.73">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/sinh_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/sinh_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/cosh_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/cosh_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/tanh_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/tanh_button"
+            android:onClick="typeEntry"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.63"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num4_button"
+            android:textSize="10sp"
+            android:id="@+id/num4_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num5_button"
+            android:textSize="10sp"
+            android:id="@+id/num5_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num6_button"
+            android:textSize="10sp"
+            android:id="@+id/num6_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/sub_button"
+            android:textSize="10sp"
+            android:id="@+id/sub_button"
+            android:onClick="typeEntry"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11.73">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/log_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/log_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/exp_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/exp_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/sig_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/sig_button"
+            android:onClick="typeEntry"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.63"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num1_button"
+            android:textSize="10sp"
+            android:id="@+id/num1_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num2_button"
+            android:textSize="10sp"
+            android:id="@+id/num2_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num3_button"
+            android:textSize="10sp"
+            android:id="@+id/num3_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/add_button"
+            android:textSize="10sp"
+            android:id="@+id/add_button"
+            android:onClick="typeEntry"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11.73">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/abs_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/abs_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/pi_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/pi_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.78"
+            android:text="@string/e_button"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:id="@+id/e_button"
+            android:onClick="typeEntry"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.63"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/dot_button"
+            android:textSize="10sp"
+            android:id="@+id/dot_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/num0_button"
+            android:textSize="10sp"
+            android:id="@+id/num0_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/neg_button"
+            android:textSize="10sp"
+            android:id="@+id/neg_button"
+            android:onClick="typeEntry"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="13.91"
+            android:text="@string/eval_button"
+            android:textSize="10sp"
+            android:id="@+id/eval_button"
+            android:onClick="typeEntry"/>
+    </LinearLayout>
+</LinearLayout>

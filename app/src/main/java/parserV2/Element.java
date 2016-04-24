@@ -9,7 +9,8 @@ public enum Element {
 	CloseBlanket(")"),
 	UnaryOperators(UnaryOperator.getOpSymbols()),
 	BinaryOperators(BinaryOperator.getOpSymbols()),
-	Numbers(new String[] {"0","1","2","3","4","5","6","7","8","9"}),
+	Numbers(Number.getNumberSymbols()),
+	MathConst(MathConstant.getConstSymbols()),
 	Negate("n"),
 	Dot("."),
     Start("@Start"),
@@ -25,13 +26,6 @@ public enum Element {
 		this.symbols = symbols;
 		for (String s : symbols)
 			Maps.symbolMap.put(s, this);
-	}
-	Element(String[] symbols) {
-		this.symbols = new HashSet<>();
-		for (int i = 0; i < symbols.length; i++) {
-			this.symbols.add(symbols[i]);
-			Maps.symbolMap.put(symbols[i], this);
-		}
 	}
 	
 	public boolean hasSymbol(String s) {

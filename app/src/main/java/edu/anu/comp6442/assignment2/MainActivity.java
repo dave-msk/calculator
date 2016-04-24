@@ -6,23 +6,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
+import parserV2.BinaryOperator;
 import parserV2.CalculatorParser;
 import parserV2.Element;
 import parserV2.InvalidComputationException;
+import parserV2.MathConstant;
+import parserV2.Number;
 import parserV2.Rule;
+import parserV2.UnaryOperator;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText exp_field;
     StringBuilder exp;
     int cursor = 0;
-    int num_blanket = 0;
     boolean evaluated = false;
     Pattern p = Pattern.compile(".*[a-zA-Z].*");
 
@@ -64,70 +66,74 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.num0_button:
+                addNumber(Number.ZERO); break;
             case R.id.num1_button:
+                addNumber(Number.ONE); break;
             case R.id.num2_button:
+                addNumber(Number.TWO); break;
             case R.id.num3_button:
+                addNumber(Number.THREE); break;
             case R.id.num4_button:
+                addNumber(Number.FOUR); break;
             case R.id.num5_button:
+                addNumber(Number.FIVE); break;
             case R.id.num6_button:
+                addNumber(Number.SIX); break;
             case R.id.num7_button:
+                addNumber(Number.SEVEN); break;
             case R.id.num8_button:
+                addNumber(Number.EIGHT); break;
             case R.id.num9_button:
-                // TODO: Check if eligible to put a number at current position,
-                // TODO: ignore if ineligible, insert number otherwise.
-                if (evaluated) {
-                    clearExp();
-                }
-                addNumber(((Button)view).getText().toString());
-                break;
+                addNumber(Number.NINE); break;
+            // -------------------------------------------
+            case R.id.pi_button:
+                addMathConst(MathConstant.PI); break;
+            case R.id.e_button:
+                addMathConst(MathConstant.E); break;
+            // -------------------------------------------
+            case R.id.sqrt_button:
+                addUnaryOperator(UnaryOperator.SQRT); break;
+            case R.id.sin_button:
+                addUnaryOperator(UnaryOperator.SIN); break;
+            case R.id.cos_button:
+                addUnaryOperator(UnaryOperator.COS); break;
+            case R.id.tan_button:
+                addUnaryOperator(UnaryOperator.TAN); break;
+            case R.id.sinh_button:
+                addUnaryOperator(UnaryOperator.SINH); break;
+            case R.id.cosh_button:
+                addUnaryOperator(UnaryOperator.COSH); break;
+            case R.id.tanh_button:
+                addUnaryOperator(UnaryOperator.TANH); break;
+            case R.id.log_button:
+                addUnaryOperator(UnaryOperator.LOG); break;
+            case R.id.exp_button:
+                addUnaryOperator(UnaryOperator.EXP); break;
+            case R.id.sig_button:
+                addUnaryOperator(UnaryOperator.SIG); break;
+            case R.id.abs_button:
+                addUnaryOperator(UnaryOperator.ABS); break;
+            // -------------------------------------------
             case R.id.add_button:
+                addBinaryOperator(BinaryOperator.ADD); break;
             case R.id.sub_button:
+                addBinaryOperator(BinaryOperator.SUB); break;
             case R.id.mult_button:
+                addBinaryOperator(BinaryOperator.MULT); break;
             case R.id.div_button:
+                addBinaryOperator(BinaryOperator.DIV); break;
+            case R.id.mod_button:
+                addBinaryOperator(BinaryOperator.MOD); break;
             case R.id.pow_button:
-                // TODO: Check if eligible to put an operator at current position,
-                // TODO: ignore if ineligible, insert number otherwise.
-                addBinaryOperator(((Button) view).getText().toString());
-                break;
+                addBinaryOperator(BinaryOperator.POW); break;
+            // ---------------------------------------------------------
             case R.id.blanket_button:
-                // TODO: Check which blanket is eligible, ignore if ineligible in both cases.
-                if (cursor == 0) {
-                    num_blanket++;
-                    insertEntry('(');
-                } else {
-                    if (isEligible(Element.OpenBlanket)) {
-                        num_blanket++;
-                        insertEntry('(');
-                    } else if (isEligible(Element.CloseBlanket) && num_blanket > 0) {
-                        num_blanket--;
-                        insertEntry(')');
-                    } else if (isEligible(Element.BinaryOperators)) {
-                        num_blanket++;
-                        insertEntry("*(");
-                    }
-                }
-                evaluated = false;
-                break;
+                addBlanket(); break;
             case R.id.eval_button:
-
-                if (CalculatorParser.hasCorrectFormat(exp.toString())) {
-                    try {
-                        double result = CalculatorParser.parse(exp.toString()).evaluate();
-                        clearExp();
-                        exp.append(result);
-                        cursor = exp.length();
-                        updateExpField();
-                        evaluated = true;
-                    } catch (InvalidComputationException e) {
-                        Toast.makeText(this,"Invalid computation. Please check the expression.",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
+                evaluate(); break;
             case R.id.neg_button:
                 // TODO: Check eligibility, ignore if ineligible.
-                negate();
-                evaluated = false;
-                break;
+                negate(); break;
             case R.id.dot_button:
                 if (evaluated) {
                     clearExp();
@@ -181,8 +187,6 @@ public class MainActivity extends AppCompatActivity {
     private void backSpaceAt(int position) {
         if (position <= 0)
             return;
-        if (exp.charAt(position-1) == '(')
-            num_blanket--;
         exp.delete(position-1,position);
         cursor = (cursor >= position) ? cursor-1 : cursor;
         updateExpField();
@@ -221,10 +225,12 @@ public class MainActivity extends AppCompatActivity {
             if (element != null)
                 earliestIndex = i;
         }
-        return Element.getElement(exp.substring(earliestIndex,cursor-1));
+        return Element.getElement(exp.substring(earliestIndex, cursor - 1));
     }
 
     private Element getPreviousElement() {
+        if (cursor == 0)
+            return Element.Start;
         int earliestIndex = cursor;
         for (int i = cursor-1; i >= 0; i--) {
             Element element = Element.getElement(exp.substring(i, cursor));
@@ -242,6 +248,23 @@ public class MainActivity extends AppCompatActivity {
                 furtherestIndex = i;
         }
         return Element.getElement(exp.substring(cursor,furtherestIndex));
+    }
+
+    private void evaluate() {
+        if (CalculatorParser.hasCorrectFormat(exp.toString())) {
+            try {
+                double result = CalculatorParser.parse(exp.toString()).evaluate();
+                clearExp();
+                exp.append(result);
+                cursor = exp.length();
+                updateExpField();
+                evaluated = true;
+            } catch (InvalidComputationException e) {
+                Toast.makeText(this,"Invalid computation. Please check the expression.",Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Invalid format",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void eraseNextElement() {
@@ -267,7 +290,36 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
-    private void addBinaryOperator(String op) {
+    private void addBlanket() {
+        Element nextEle = getNextElement();
+        int layer = 0;
+        for (int i = 0; i < exp.length(); i++) {
+            if (exp.charAt(i) == '(')
+                layer++;
+            if (exp.charAt(i) == ')')
+                layer--;
+        }
+        if (isEligible(Element.OpenBlanket))
+            insertEntry('(');
+        else if (isEligible(Element.CloseBlanket) && layer > 0)
+            if (Rule.BinaryOperators.obeysRule(nextEle))
+                insertEntry(")" + BinaryOperator.MULT.symbol);
+            else
+                insertEntry(')');
+        else if (isEligible(Element.BinaryOperators))
+            insertEntry(BinaryOperator.MULT.symbol + "(");
+        evaluated = false;
+    }
+
+    private void addUnaryOperator(UnaryOperator op) {
+        Rule prevRule = Rule.getRule(getPreviousElement());
+        if (!prevRule.obeysRule(Element.UnaryOperators))
+            return;
+        insertEntry(op.symbol+"(");
+        evaluated = false;
+    }
+
+    private void addBinaryOperator(BinaryOperator op) {
         if (cursor == 0)
             return;
         Rule prevRule = Rule.getRule(getPreviousElement());
@@ -283,38 +335,41 @@ public class MainActivity extends AppCompatActivity {
             else if (!currRule.obeysRule(nextEle))
                 return;
         }
-        insertEntry(op);
+        insertEntry(op.symbol);
         evaluated = false;
     }
 
-    private void addNumber(String num) {
-        if (cursor > 0) {
-            char prevChar = exp.charAt(cursor-1);
-            Element prevEle = Element.getElement(prevChar);
-            if (prevEle == Element.CloseBlanket) {
-                insertEntry("*" + num);
-                return;
-            } else if (prevEle != Element.BinaryOperators && prevEle != null) {
-                insertEntry(num);
-                return;
-            }
+    private void addNumber(Number number) {
+        if (evaluated) clearExp();
+        Element prevEle = getPreviousElement();
+        if (prevEle == Element.CloseBlanket) {
+            insertEntry(BinaryOperator.MULT.symbol + number.symbol);
+            return;
+        } else if (prevEle != Element.BinaryOperators && prevEle != null) {
+            insertEntry(number.symbol);
+            return;
         }
-        if (exp.length() > cursor) {
-            // char nextChar = exp.charAt(cursor);
-            int index = 0;
-            StringBuilder sbd = new StringBuilder();
-            for (int i = cursor; i < exp.length(); i++) {
-                sbd.append(exp.charAt(i));
-                if (Element.getElement(sbd.toString()) != null)
-                    index = i;
-            }
-            Element nextEle = Element.getElement(exp.substring(cursor,index+1));
-            if (nextEle == Element.OpenBlanket || nextEle == Element.UnaryOperators) {
-                insertEntry(num + "*");
-                return;
-            }
+
+        Element nextEle = getNextElement();
+        if (nextEle == Element.OpenBlanket || nextEle == Element.UnaryOperators) {
+            insertEntry(number.symbol + BinaryOperator.MULT.symbol);
+            return;
         }
-        insertEntry(num);
+        insertEntry(number.symbol);
+        evaluated = false;
+    }
+
+    private void addMathConst(MathConstant mathConstant) {
+        if (evaluated) clearExp();
+        Element nextEle = getNextElement();
+        Rule rule = Rule.MathConst;
+        Rule binRule = Rule.BinaryOperators;
+        if (isEligible(Element.BinaryOperators) && rule.obeysRule(nextEle))
+            insertEntry(BinaryOperator.MULT.symbol + mathConstant.symbol);
+        else if (isEligible(Element.MathConst) && binRule.obeysRule(nextEle))
+            insertEntry(mathConstant.symbol + BinaryOperator.MULT.symbol);
+        else if (isEligible(Element.MathConst))
+            insertEntry(mathConstant.symbol);
         evaluated = false;
     }
 
@@ -368,22 +423,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
             }
             insertEntryAt(searchCursor,"(-");
-            num_blanket++;
         }
-        /*
-        if (exp.length() == 0) {
-            num_blanket++;
-            insertEntry("(-");
-            return;
-        }
-        if (exp.length()-cursor == 1) {
-            char nextChar = exp.charAt(cursor);
-            if (cursor == 0) {
-                if (rule.obeysRule(nextChar)) {
-
-                }
-            }
-        }*/
-
+        evaluated = false;
     }
 }
