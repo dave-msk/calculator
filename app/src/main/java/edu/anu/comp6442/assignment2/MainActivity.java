@@ -22,6 +22,10 @@ import parserV2.UnaryOperator;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String CURSOR_KEY = "edu.anu.comp6442.assignment2.CURSORKEY";
+    private static final String EXP_KEY = "edu.anu.comp6442.assignment2.EXPKEY";
+    private static final String STATE_KEY = "edu.anu.comp6442.assignment2.STATEKEY";
+
     EditText exp_field;
     StringBuilder exp;
     int cursor = 0;
@@ -33,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        exp = new StringBuilder();
         exp_field = (EditText) findViewById(R.id.expression_field);
-        // exp_field.setInputType(InputType.TYPE_NULL);
         exp_field.setRawInputType(InputType.TYPE_CLASS_TEXT);
         exp_field.setTextIsSelectable(true);
         exp_field.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +47,23 @@ public class MainActivity extends AppCompatActivity {
                 evaluated = false;
             }
         });
+
+        if (savedInstanceState != null) {
+            exp = new StringBuilder(savedInstanceState.getString(EXP_KEY));
+            cursor = savedInstanceState.getInt(CURSOR_KEY);
+            evaluated = savedInstanceState.getBoolean(STATE_KEY);
+        } else {
+            exp = new StringBuilder();
+        }
+        updateExpField();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURSOR_KEY, cursor);
+        outState.putString(EXP_KEY, exp.toString());
+        outState.putBoolean(STATE_KEY,evaluated);
     }
 
     public void typeEntry(View view) {
@@ -341,6 +360,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addNumber(Number number) {
         if (evaluated) clearExp();
+        evaluated = false;
         Element prevEle = getPreviousElement();
         if (prevEle == Element.CloseBlanket) {
             insertEntry(BinaryOperator.MULT.symbol + number.symbol);
@@ -356,11 +376,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         insertEntry(number.symbol);
-        evaluated = false;
+
     }
 
     private void addMathConst(MathConstant mathConstant) {
         if (evaluated) clearExp();
+        evaluated = false;
         Element nextEle = getNextElement();
         Rule rule = Rule.MathConst;
         Rule binRule = Rule.BinaryOperators;
@@ -370,10 +391,10 @@ public class MainActivity extends AppCompatActivity {
             insertEntry(mathConstant.symbol + BinaryOperator.MULT.symbol);
         else if (isEligible(Element.MathConst))
             insertEntry(mathConstant.symbol);
-        evaluated = false;
     }
 
     private void negate() {
+        evaluated = false;
         boolean negateDetected = false;
         int searchCursor = 0;
         char prevChar = (cursor > 0) ? exp.charAt(cursor-1) : 0;
@@ -424,6 +445,5 @@ public class MainActivity extends AppCompatActivity {
             }
             insertEntryAt(searchCursor,"(-");
         }
-        evaluated = false;
     }
 }
