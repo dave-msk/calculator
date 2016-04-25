@@ -21,6 +21,7 @@
     <string name="num9_button">9</string>
     <string name="num0_button">0</string>
     <string name="history_button">HIST</string>
+    <string name="recip_button">1/x</string>
     <string name="mod_button">mod</string>
     <string name="sqrt_button">sqrt</string>
     <string name="sin_button">sin</string>
@@ -35,5 +36,6 @@
     <string name="abs_button">abs</string>
     <string name="pi_button">PI</string>
     <string name="e_button">e</string>
+
 
 </resources>

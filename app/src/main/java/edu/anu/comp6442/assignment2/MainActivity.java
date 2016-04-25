@@ -52,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
             exp = new StringBuilder(savedInstanceState.getString(EXP_KEY));
             cursor = savedInstanceState.getInt(CURSOR_KEY);
             evaluated = savedInstanceState.getBoolean(STATE_KEY);
+            updateExpField();
+            exp_field.setSelection(cursor);
         } else {
             exp = new StringBuilder();
         }
-        updateExpField();
+
     }
 
     @Override
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putInt(CURSOR_KEY, cursor);
         outState.putString(EXP_KEY, exp.toString());
-        outState.putBoolean(STATE_KEY,evaluated);
+        outState.putBoolean(STATE_KEY, evaluated);
     }
 
     public void typeEntry(View view) {
@@ -110,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.e_button:
                 addMathConst(MathConstant.E); break;
             // -------------------------------------------
+            case R.id.recip_button:
+                addRecip(); break;
             case R.id.sqrt_button:
                 addUnaryOperator(UnaryOperator.SQRT); break;
             case R.id.sin_button:
@@ -266,7 +270,13 @@ public class MainActivity extends AppCompatActivity {
             if (element != null)
                 furtherestIndex = i;
         }
-        return Element.getElement(exp.substring(cursor,furtherestIndex));
+        if (furtherestIndex == cursor)
+            if (cursor < exp.length())
+                return null;
+            else
+                return Element.Null;
+        else
+            return Element.getElement(exp.substring(cursor,furtherestIndex));
     }
 
     private void evaluate() {
@@ -356,6 +366,16 @@ public class MainActivity extends AppCompatActivity {
         }
         insertEntry(op.symbol);
         evaluated = false;
+    }
+
+    private void addRecip() {
+        if (evaluated) clearExp();
+        evaluated = false;
+        if (isEligible(Element.BinaryOperators))
+            insertEntry(BinaryOperator.MULT.symbol + Number.ONE.symbol
+                    + BinaryOperator.DIV.symbol + "(");
+        else if (isEligible(Element.MathConst))
+            insertEntry(Number.ONE.symbol + BinaryOperator.DIV.symbol + "(");
     }
 
     private void addNumber(Number number) {

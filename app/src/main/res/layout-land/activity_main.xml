@@ -49,9 +49,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="13.78"
-            android:text="@string/history_button"
+            android:text="@string/recip_button"
+            android:textAllCaps="false"
             android:textSize="10sp"
-            android:id="@+id/history_button"
+            android:id="@+id/recip_button"
             android:onClick="typeEntry"/>
 
         <Button
