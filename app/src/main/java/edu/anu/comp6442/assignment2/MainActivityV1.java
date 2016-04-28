@@ -2,16 +2,14 @@
 //Assignment 2 COMP6442
 package edu.anu.comp6442.assignment2;
 
-import android.os.PatternMatcher;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import calculatorParser.CalculatorParser;
@@ -21,11 +19,19 @@ import calculatorParser.Rule;
 
 public class MainActivityV1 extends AppCompatActivity {
 
+    //Declarations
+
     EditText exp_field;
     StringBuilder exp;
+
+    //Initialization
+
     int cursor = 0;
     int num_blanket = 0;
     boolean evaluated = false;
+
+    //Regular expression for pattern matching.
+
     Pattern p = Pattern.compile(".*[a-zA-Z].*");
 
     @Override
@@ -33,9 +39,13 @@ public class MainActivityV1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Creation of new object of StringBuilder class
         exp = new StringBuilder();
+
+        //Instantiation of exp_field Edit_Text
         exp_field = (EditText) findViewById(R.id.expression_field);
-        // exp_field.setInputType(InputType.TYPE_NULL);
+
+        //
         exp_field.setRawInputType(InputType.TYPE_CLASS_TEXT);
         exp_field.setTextIsSelectable(true);
         exp_field.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +65,9 @@ public class MainActivityV1 extends AppCompatActivity {
                 clearExp();
                 updateExpField();
                 break;
+            case R.id.rotation_button:
+
+
             case R.id.back_button:
                 if (cursor > 0)
                     backSpace();
@@ -152,7 +165,7 @@ public class MainActivityV1 extends AppCompatActivity {
         cursor++;
         updateExpField();
     }
-
+/* this method seems to have the same name as the method following it*/
     private void insertEntryAt(int position, char entry) {
         exp.insert(position,entry);
         cursor++;

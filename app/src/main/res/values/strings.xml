@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Assignment2</string>
+    <string name="app_name">Calculator</string>
     <string name="cancel_button">C</string>
     <string name="blankets_button">( )</string>
     <string name="pow_button">^</string>

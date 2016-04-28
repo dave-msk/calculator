@@ -25,18 +25,39 @@
         android:layout_weight="7.5"
         android:gravity="center_vertical">
 
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/pad_space_right"
-            android:layout_alignParentRight="true"/>
+
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/pad_space_right"
             android:background="@mipmap/ic_backspace_black_36dp"
             android:id="@+id/back_button"
-            android:onClick="typeEntry"/>
+            android:onClick="typeEntry"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HISTORY"
+            android:id="@+id/button_history"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#696fbc"
+            android:background="#ffffff" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_rotation_icon"
+            android:id="@+id/rotation_button"
+            android:onClick="typeEntry"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+
     </RelativeLayout>
 
     <LinearLayout
