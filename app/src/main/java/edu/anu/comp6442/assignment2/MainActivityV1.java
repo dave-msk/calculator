@@ -255,6 +255,7 @@ public class MainActivityV1 extends AppCompatActivity {
     private void addNumber(String num) {
         if (cursor > 0) {
             char prevChar = exp.charAt(cursor-1);
+            //instantiation
             Element prevEle = Element.getElement(prevChar);
             if (prevEle == Element.CloseBlanket) {
                 insertEntry("*" + num);
