@@ -45,9 +45,13 @@ public class MainActivityV1 extends AppCompatActivity {
         //Instantiation of exp_field Edit_Text
         exp_field = (EditText) findViewById(R.id.expression_field);
 
-        //
+        //setting the input type as text of the edit text box
+
         exp_field.setRawInputType(InputType.TYPE_CLASS_TEXT);
         exp_field.setTextIsSelectable(true);
+
+        //getting the position of the cursor in the EditText
+
         exp_field.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +60,8 @@ public class MainActivityV1 extends AppCompatActivity {
             }
         });
     }
+
+    //Method for entering values into edit text
 
     public void typeEntry(View view) {
         if (evaluated && p.matcher(exp.toString()).find())
@@ -87,6 +93,7 @@ public class MainActivityV1 extends AppCompatActivity {
                 if (evaluated) {
                     clearExp();
                 }
+
                 addNumber(((Button)view).getText().toString());
                 break;
             case R.id.add_button:
@@ -222,6 +229,8 @@ public class MainActivityV1 extends AppCompatActivity {
         return rule.obeysRule(element);
     }
 
+    //Method called when a user clicks on any of the operator buttons in the calculator
+
     private void addOperator(String op) {
         if (cursor == 0)
             return;
@@ -240,6 +249,8 @@ public class MainActivityV1 extends AppCompatActivity {
         insertEntry(op);
         evaluated = false;
     }
+
+    //Method called when a user clicks on any of the number buttons in the calculator
 
     private void addNumber(String num) {
         if (cursor > 0) {
