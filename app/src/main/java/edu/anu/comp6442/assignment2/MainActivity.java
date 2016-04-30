@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.regex.Pattern;
@@ -25,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String CURSOR_KEY = "edu.anu.comp6442.assignment2.CURSORKEY";
     private static final String EXP_KEY = "edu.anu.comp6442.assignment2.EXPKEY";
     private static final String STATE_KEY = "edu.anu.comp6442.assignment2.STATEKEY";
+    private static final String HISTORY_KEY = "edu.anu.comp6442.assignment2.HISTORYKEY";
 
+    LinearLayout historyView;
+    ListView historyList;
     EditText exp_field;
     StringBuilder exp;
     int cursor = 0;
@@ -36,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        historyView = (LinearLayout) findViewById(R.id.history_view);
+        historyList = (ListView) findViewById(R.id.history_list);
 
         exp_field = (EditText) findViewById(R.id.expression_field);
         exp_field.setRawInputType(InputType.TYPE_CLASS_TEXT);
@@ -57,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             exp = new StringBuilder();
         }
-
     }
 
     @Override
@@ -66,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(CURSOR_KEY, cursor);
         outState.putString(EXP_KEY, exp.toString());
         outState.putBoolean(STATE_KEY, evaluated);
+    }
+
+    public void toppleHistoryView(View view) {
+        if (historyView.getVisibility() == View.VISIBLE)
+            historyView.setVisibility(View.GONE);
+        else
+            historyView.setVisibility(View.VISIBLE);
     }
 
     public void typeEntry(View view) {
@@ -77,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 updateExpField();
                 break;
             case R.id.back_button:
-                // TODO: Erase the element before the cursor.
                 if (cursor > 0) {
                     Element element = getPreviousElement2();
                     if (element == Element.UnaryOperators) {
@@ -155,14 +168,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.eval_button:
                 evaluate(); break;
             case R.id.neg_button:
-                // TODO: Check eligibility, ignore if ineligible.
                 negate(); break;
             case R.id.dot_button:
                 if (evaluated) {
                     clearExp();
                     evaluated = false;
                 }
-                // TODO: Check eligibility, ignore if ineligible.
                 if (isEligibleForDot()) {
                     insertEntry('.');
                 }
@@ -187,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
+    @Deprecated
     private void insertEntryAt(int position, char entry) {
         exp.insert(position,entry);
         cursor++;
@@ -199,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
+    @Deprecated
     private void backSpace() {
         if (cursor == 0)
             return;
@@ -446,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (negateDetected) {
-            // TODO: Erase the negate sign and the nearest coming close blanket.
+            // Erase the negate sign and the nearest coming close blanket.
             for (int i = cursor; i < exp.length(); i++) {
                 char currChar = exp.charAt(i);
                 if (Element.getElement(currChar) == Element.CloseBlanket) {
@@ -457,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
             backSpaceAt(searchCursor);
             backSpaceAt(searchCursor);
         } else {
-            // TODO: Add the negate sign in front of the current number.
+            // Add the negate sign in front of the current number.
             if (cursor < exp.length()) {
                 char nextChar = exp.charAt(cursor);
                 if (prevChar == '(' && nextChar == '-')

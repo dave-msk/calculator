@@ -20,7 +20,7 @@
     <string name="num8_button">8</string>
     <string name="num9_button">9</string>
     <string name="num0_button">0</string>
-    <string name="history_button">HIST</string>
+    <string name="history_button">HISTORY</string>
     <string name="recip_button">1/x</string>
     <string name="mod_button">mod</string>
     <string name="sqrt_button">sqrt</string>
