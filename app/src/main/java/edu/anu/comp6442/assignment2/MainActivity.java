@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
+import parserV2.AppUtils;
 import parserV2.BinaryOperator;
 import parserV2.CalculatorParser;
 import parserV2.Element;
@@ -296,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             try {
                 double result = CalculatorParser.parse(exp.toString()).evaluate();
+                result = AppUtils.round(result);
                 clearExp();
                 exp.append(result);
                 cursor = exp.length();
