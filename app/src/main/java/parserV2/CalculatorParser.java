@@ -169,7 +169,7 @@ public class CalculatorParser {
 		return true;
 	}
 	
-	private static boolean isNumeric(String str) {
+	public static boolean isNumeric(String str) {
 		return str.matches("\\d*(\\.\\d+)?") && !str.isEmpty();
 	}
 	

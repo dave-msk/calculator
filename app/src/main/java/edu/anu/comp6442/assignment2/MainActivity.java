@@ -297,7 +297,10 @@ public class MainActivity extends AppCompatActivity {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             try {
                 double result = CalculatorParser.parse(exp.toString()).evaluate();
-                result = AppUtils.round(result);
+
+                if (!Double.isInfinite(result) && !Double.isNaN(result))
+                    result = AppUtils.round(result);
+
                 clearExp();
                 exp.append(result);
                 cursor = exp.length();
