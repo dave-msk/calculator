@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class AppUtils {
 
     public static final int MAXDIGIT = 14;
-    public static final int MAXDECIMAL = 10;
+    public static final int MAXDECIMAL = 9;
 
     public static double round(double d) {
         int digits = leadingDigits(d);

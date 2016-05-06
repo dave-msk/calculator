@@ -14,7 +14,8 @@ public class CalculatorParser {
 		
 		if (components.size() == 1) {
 			expStr = components.get(0);
-			if (isNumeric(expStr)) {
+            System.out.println(expStr);
+            if (isNumeric(expStr)) {
 				return new Expression(Double.parseDouble(expStr));
 			}
 
@@ -190,40 +191,48 @@ public class CalculatorParser {
 	
 	private static List<String> flatSplit(String expStr) {
 		int layer = 0;
+
+		int furthestIndex = 0;
+		char prevChar = 0;
 		StringBuilder sbd = new StringBuilder();
 		List<String> result = new ArrayList<>();
-		StringBuilder prevElementStr = new StringBuilder();
-		StringBuilder currElementStr = new StringBuilder();
 		for (int i = 0; i < expStr.length(); i++) {
+			if (furthestIndex > i) {
+				continue;
+			}
+
+			if (i > 0)
+				prevChar = expStr.charAt(i-1);
+
 			char currChar = expStr.charAt(i);
-			String prevStr = prevElementStr.toString();
-			
+
 			if (currChar == ' ')
 				continue;
 			else if (currChar == '(')
 				layer++;
 			else if (currChar == ')')
 				layer--;
-			
-			if ((prevStr.length() == 0 || prevStr.equals("(")) && currChar == '-')
+
+			if ((prevChar == 0 || prevChar == '(') && currChar == '-') {
 				sbd.append('n');
-			else {
-				currElementStr.append(currChar);
-				String currStr = currElementStr.toString();
-				Element currEle = Element.getElement(currStr);
-				if (currEle == null)
-					continue;
-				
-				if (layer == 0 && currEle == Element.BinaryOperators) {
-					result.add(sbd.toString());
-					result.add(currStr);
-					sbd.setLength(0);
-				} else
-					sbd.append(currStr);
+				continue;
 			}
-			prevElementStr.setLength(0);
-			prevElementStr.append(currElementStr);
-			currElementStr.setLength(0);
+
+			for (int j = i; j < expStr.length(); j++) {
+				Element element = Element.getElement(expStr.substring(i,j+1));
+				if (element != null)
+					furthestIndex = j+1;
+			}
+
+			String currElementStr = expStr.substring(i,furthestIndex);
+			Element currElement = Element.getElement(currElementStr);
+			if (layer == 0 && currElement == Element.BinaryOperators) {
+				result.add(sbd.toString());
+				result.add(currElementStr);
+				sbd.setLength(0);
+			} else {
+				sbd.append(currElementStr);
+			}
 		}
 		result.add(sbd.toString());
 		return result;
