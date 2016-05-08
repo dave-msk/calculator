@@ -346,4 +346,8 @@ public class MainActivityV1 extends AppCompatActivity {
         }*/
 
     }
+
+    public void toppleHistoryView(View view) {
+
+    }
 }
