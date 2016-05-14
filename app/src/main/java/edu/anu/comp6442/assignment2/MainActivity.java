@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout historyView;
     ListView historyList;
     EditText exp_field;
-    TextView value_field;
+    TextView value_field; //for holding the value
     StringBuilder exp;
     int cursor = 0;
     boolean evaluated = false;
