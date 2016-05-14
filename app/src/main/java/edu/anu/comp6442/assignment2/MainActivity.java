@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.regex.Pattern;
@@ -30,25 +31,35 @@ public class MainActivity extends AppCompatActivity {
     private static final String STATE_KEY = "edu.anu.comp6442.assignment2.STATEKEY";
     private static final String HISTORY_KEY = "edu.anu.comp6442.assignment2.HISTORYKEY";
 
+    //Initialization
     LinearLayout historyView;
     ListView historyList;
     EditText exp_field;
+    TextView value_field;
     StringBuilder exp;
     int cursor = 0;
     boolean evaluated = false;
     Pattern p = Pattern.compile(".*[a-zA-Z].*");
 
+    //OnCreate method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //to hold the value after the evaluation of the expression
+        value_field = (TextView) findViewById(R.id.textView_value);
+
+        //for history
         historyView = (LinearLayout) findViewById(R.id.history_view);
         historyList = (ListView) findViewById(R.id.history_list);
 
+        //the expression field
         exp_field = (EditText) findViewById(R.id.expression_field);
         exp_field.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        exp_field.setTextIsSelectable(true);
+        exp_field.setTextIsSelectable(true); //for selecting text in the expression field
+
+        //for getting the cursor position
         exp_field.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,17 +68,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //checking whether a previously destroyed instance is recreated or not
         if (savedInstanceState != null) {
+            //Restoring values of members from saved state
             exp = new StringBuilder(savedInstanceState.getString(EXP_KEY));
             cursor = savedInstanceState.getInt(CURSOR_KEY);
             evaluated = savedInstanceState.getBoolean(STATE_KEY);
             updateExpField();
             exp_field.setSelection(cursor);
         } else {
+            //initializing exp for new instance
             exp = new StringBuilder();
         }
+
     }
 
+    //getting the state back
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -77,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toppleHistoryView(View view) {
+
         if (historyView.getVisibility() == View.VISIBLE)
             historyView.setVisibility(View.GONE);
         else
@@ -167,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.blanket_button:
                 addBlanket(); break;
             case R.id.eval_button:
-                evaluate(); break;
+                evaluate(); break;//-----------------//-------------------
             case R.id.neg_button:
                 negate(); break;
             case R.id.dot_button:
@@ -300,11 +317,12 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!Double.isInfinite(result) && !Double.isNaN(result))
                     result = AppUtils.round(result);
-
+//---------------------------------------------------------------------------//------------------------------
                 clearExp();
                 exp.append(result);
                 cursor = exp.length();
                 updateExpField();
+
                 evaluated = true;
             } catch (InvalidComputationException e) {
                 Toast.makeText(this,"Invalid computation. Please check the expression.",Toast.LENGTH_SHORT).show();
@@ -484,4 +502,5 @@ public class MainActivity extends AppCompatActivity {
             insertEntryAt(searchCursor,"(-");
         }
     }
+
 }
