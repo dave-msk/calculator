@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
             historyView.setVisibility(View.VISIBLE);
     }
 
+    //typing the values in the text area of the calculator
     public void typeEntry(View view) {
         if (evaluated && p.matcher(exp.toString()).find())
             clearExp();
@@ -318,8 +319,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!Double.isInfinite(result) && !Double.isNaN(result))
                     result = AppUtils.round(result);
 //---------------------------------------------------------------------------//------------------------------
-                clearExp();
-                exp.append(result);
+               // clearExp();
+                exp.append(result);// memory legage
                 cursor = exp.length();
                 updateExpField();
 
