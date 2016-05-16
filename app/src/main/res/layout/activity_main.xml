@@ -8,7 +8,8 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="0dp"
+        android:layout_weight="24.58"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="20dp"
@@ -16,14 +17,15 @@
         android:id="@+id/expression_field"
         android:background="@android:color/transparent"
         android:textSize="40sp"
-        android:gravity="end"
-        android:layout_weight="9.37" />
+        android:gravity="end" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/textView_value"
-        android:layout_weight="13.91" />
+        android:textSize="20sp"
+        android:height="0dp"
+        android:layout_weight="11.52" />
 
     <RelativeLayout
         android:layout_width="match_parent"
