@@ -11,7 +11,7 @@ public final class AppUtils {
     public static final int MAXDECIMAL = 9;
 
     private AppUtils(){};
-
+   //method for rounding the numerical value
     public static double round(double d) {
         if (Double.isNaN(d) || Double.isInfinite(d))
             return d;
@@ -24,6 +24,7 @@ public final class AppUtils {
             return rounded;
         return d;
     }
+
 
     private static int leadingDigits(double d) {
         int digits = 0;
