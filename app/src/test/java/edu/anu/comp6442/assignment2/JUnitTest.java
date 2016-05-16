@@ -24,6 +24,9 @@ public class JUnitTest {
         boolean actual_value = CalculatorParser.hasCorrectFormat("-(-(-(-2)+sin(-3.25^4)^2))/5*log(2)+4/tan(-(-2))*3.427-6/(20+4)");
         boolean expected_value = true;
         assertEquals("Test failed", expected_value, actual_value);
+        boolean actual_value1 = CalculatorParser.hasCorrectFormat("(+)");
+        boolean expected_value1 = false;
+        assertEquals("Test failed", expected_value1, actual_value1);
     }
 
     //similarly testing of the isNumeric method, testing whether the regular expression working properly or not
@@ -32,6 +35,9 @@ public class JUnitTest {
         boolean actual_value = CalculatorParser.isNumeric("12.65");
         boolean expected_value = true;
         assertEquals("Test failed", expected_value, actual_value);
+        boolean actual_value1 = CalculatorParser.isNumeric("1");
+        boolean expected_value1 = true;
+        assertEquals("Test failed", expected_value1, actual_value1);
     }
 
     //testing of the round() method of AppUtils
