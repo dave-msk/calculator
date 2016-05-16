@@ -129,7 +129,7 @@ public class CalculatorParser {
 		boolean hasDot = false; // This is to prevent two dots appearing in the same number.
 
 		StringBuilder currElementStr = new StringBuilder();
-        Element prevElement = Element.Start;
+        Element prevElement = Element.Start;//initially set to @start but gets updated by the rule
 
 		for (int i = 0; i < expStr.length(); i++) {
             if (furtherestIndex >= i)
