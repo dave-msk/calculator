@@ -1,4 +1,3 @@
-//Testing
 //Assignment 2 COMP6442
 package edu.anu.comp6442.assignment2;
 
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String RAD_MODE = "RAD";
 
     //Variable declarations
-    LinearLayout historyView; // variable declaration for historyView
+    LinearLayout historyView;
     ListView historyListView;
     EditText exp_field;
     TextView value_field; //for holding the value
@@ -271,8 +270,8 @@ public class MainActivity extends AppCompatActivity {
                     erasePreviousElement();
                 }
                 break;
-            // -------------------------------------------
-            // Adding numbers
+            //-------------------------------------------
+            //  For entering numbers into exp_field
             case R.id.num0_button:
                 addNumber(Number.ZERO); break;
             case R.id.num1_button:
@@ -294,13 +293,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.num9_button:
                 addNumber(Number.NINE); break;
             // -------------------------------------------
-            // Adding math constants
+            // For entering math constants into exp_field
             case R.id.pi_button:
                 addMathConst(MathConstant.PI); break;
             case R.id.e_button:
                 addMathConst(MathConstant.E); break;
             // -------------------------------------------
-            // Adding functions
+            // For adding functions to the expression
             case R.id.recip_button:
                 addRecip(); break;
             case R.id.sqrt_button:
@@ -326,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.abs_button:
                 addUnaryOperator(UnaryOperator.ABS); break;
             // -------------------------------------------
-            // Adding binary operators
+            // Adding binary operators to the operands
             case R.id.add_button:
                 addBinaryOperator(BinaryOperator.ADD); break;
             case R.id.sub_button:
@@ -340,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.pow_button:
                 addBinaryOperator(BinaryOperator.POW); break;
             // ---------------------------------------------------------
-            // Other functionalities.
+            // Other functions such as: brackets, evaluation ("="), unary minus "+/-" button and dot "."(for decimal points) .
             case R.id.blanket_button:
                 addBlanket(); break;
             case R.id.eval_button:
