@@ -45,5 +45,7 @@ public class JUnitTest {
         double a = 0.1499999999999999944488848768742172978818416595458984375;
         double expected_value = AppUtils.round(a);
         assertEquals("Test Failed",expected_value,0.15);
+        double c = 0;
+        assertEquals("Test Failed",0.0,AppUtils.round(c));
     }
 }
