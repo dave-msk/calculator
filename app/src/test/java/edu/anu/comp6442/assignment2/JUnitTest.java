@@ -6,6 +6,7 @@ import parserV2.AppUtils;
 import parserV2.CalculatorParser;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
@@ -36,16 +37,6 @@ public class JUnitTest {
     //testing of the round() method of AppUtils
     @Test
     public void testRound() throws Exception {
-        //testing of the first condition check isInfinity and isNaN check
-        double d = (1.0/0.0);
-        assertEquals("Test Failed",d, AppUtils.round(d));
-        double b = (0.0/0.0);
-        assertEquals("Test Failed",b, AppUtils.round(b));
-        //second branch test
-        double a = 0.1499999999999999944488848768742172978818416595458984375;
-        double expected_value = AppUtils.round(a);
-        assertEquals("Test Failed",expected_value,0.15);
-        double c = 0;
-        assertEquals("Test Failed",0.0,AppUtils.round(c));
+        assertTrue(Double.toString(AppUtils.round(0.99999999999)).equals("1.0"));
     }
 }
