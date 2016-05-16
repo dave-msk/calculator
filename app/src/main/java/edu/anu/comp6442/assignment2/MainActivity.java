@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String DEG_MODE = "DEG";
     private static final String RAD_MODE = "RAD";
 
-    //Initializations
-    LinearLayout historyView;
+    //Variable declarations
+    LinearLayout historyView; // variable declaration for historyView
     ListView historyListView;
     EditText exp_field;
     TextView value_field; //for holding the value
