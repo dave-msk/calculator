@@ -204,6 +204,10 @@ public class MainActivity extends AppCompatActivity {
     private void updateExpField() {
         exp_field.setText(exp.toString());
     }
+    //for displaying vallues in the text field
+    private void updateTextField(){
+
+    }
 
     private void insertEntry(String entry) {
         exp.insert(cursor,entry);
@@ -320,9 +324,10 @@ public class MainActivity extends AppCompatActivity {
                     result = AppUtils.round(result);
 //---------------------------------------------------------------------------//------------------------------
                // clearExp();
-                exp.append(result);// memory legage
-                cursor = exp.length();
-                updateExpField();
+               // exp.append(result);// memory leakage
+                //cursor = exp.length();
+                //updateExpField();
+                updateTextField();
 
                 evaluated = true;
             } catch (InvalidComputationException e) {
