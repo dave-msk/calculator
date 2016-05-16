@@ -1,7 +1,5 @@
 package calculatorParser;
 
-import java.util.List;
-
 public class TestParser {
 	public static void main(String[] args) throws Exception{
 		String originalStr = "-(-(-(-2)+3.25^4^2))/5*2+4/2*3.427-6/(20+4)";
