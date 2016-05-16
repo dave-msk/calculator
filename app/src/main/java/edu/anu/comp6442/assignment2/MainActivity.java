@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
     private void evaluate() {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             clearExp();
-            exp.append(result);
+           // exp.append(result); //the result needs to be displayed in the text field
             cursor = exp.length();
             updateExpField();
             value_field.setText("");//not this
