@@ -1,5 +1,8 @@
 package parserV2;
 
+/**
+ * This class defines an expression using a binary tree.
+ */
 public class Expression {
 	private Expression l = null;
 	private Expression r = null;

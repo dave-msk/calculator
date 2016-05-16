@@ -3,7 +3,15 @@ package parserV2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalculatorParser {
+/**
+ * This is the main parser used in the calculator.
+ * This class consists of only static methods.
+ */
+
+public final class CalculatorParser {
+
+	private CalculatorParser(){};
+
 	public static Expression parse(String expStr, boolean degreeMode) {
 
 		// Trim the expStr

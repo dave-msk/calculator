@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is a set of grammars of the expression.
+ */
 public enum Rule {
 	OpenBlanket(Element.OpenBlanket, new Element[] {Element.OpenBlanket, Element.Numbers, Element.Dot, Element.Negate, Element.UnaryOperators, Element.MathConst}),
 	CloseBlanket(Element.CloseBlanket, new Element[] {Element.CloseBlanket, Element.BinaryOperators}), 

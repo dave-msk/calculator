@@ -3,12 +3,14 @@ package parserV2;
 import java.math.BigDecimal;
 
 /**
- * Created by david on 5/5/16.
+ * This is a helper class that consists of some helper methods like rounding.
  */
-public class AppUtils {
+public final class AppUtils {
 
     public static final int MAXDIGIT = 14;
     public static final int MAXDECIMAL = 9;
+
+    private AppUtils(){};
 
     public static double round(double d) {
         if (Double.isNaN(d) || Double.isInfinite(d))

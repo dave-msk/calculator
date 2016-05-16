@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Created by david on 4/25/16.
+ * This enum class defines the numbers to be used in the calculator.
+ * It can be extended to any positive integer -based number system.
  */
 public enum Number {
     ZERO("0",0),
