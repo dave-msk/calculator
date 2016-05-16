@@ -3,7 +3,6 @@ package edu.anu.comp6442.assignment2;
 import org.junit.Test;
 
 import parserV2.CalculatorParser;
-import parserV2.Expression;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -15,11 +14,7 @@ public class JUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
-    @Test
-    public void testParse() throws Exception {
-        Expression expected_value = CalculatorParser.parse("1", true);
-        assertEquals("Test failed",expected_value, CalculatorParser.parse("1",true));
-    }
+
     @Test
     public void testHasCorrectFormat() throws Exception {
         boolean actual_value = CalculatorParser.hasCorrectFormat("2+3");
@@ -28,7 +23,11 @@ public class JUnitTest {
     }
 
     public void testIsNumeric() throws Exception {
-
+        boolean actual_value = CalculatorParser.isNumeric("12.65");
+        boolean expected_value = true;
+        assertEquals("Test failed", expected_value, actual_value);
     }
+
+
 
 }
