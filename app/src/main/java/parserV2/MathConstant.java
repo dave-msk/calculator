@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * Created by david on 4/25/16.
+ * This enum class defines the math constants to be used in the calculator.
  */
 public enum MathConstant {
     PI("PI",Math.PI),

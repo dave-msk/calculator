@@ -13,9 +13,9 @@ import java.util.Map;
 import edu.anu.comp6442.assignment2.R;
 
 /**
- * Created by david on 5/16/16.
+ * This class defines an adapter in used in the history list.
  */
-public class HistoryAdapter  extends ArrayAdapter<Map<String,String>>{
+public class HistoryAdapter extends ArrayAdapter<Map<String,String>>{
     Context context;
     LayoutInflater inflater;
     int resourceId;

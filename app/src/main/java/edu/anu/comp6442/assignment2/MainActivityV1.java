@@ -17,6 +17,12 @@ import calculatorParser.Element;
 import calculatorParser.InvalidComputationException;
 import calculatorParser.Rule;
 
+/**
+ * This is an old version of main activity which uses the old parser.
+ * Please see "MainActivity" for the current version
+ */
+
+@Deprecated
 public class MainActivityV1 extends AppCompatActivity {
 
     //Declarations

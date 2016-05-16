@@ -3,6 +3,10 @@ package parserV2;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * This enum class defines the binary operators in the calculator.
+ */
+
 public enum BinaryOperator {
 	ADD ("+", Precedence.Low, new BinaryComputable() {
 		@Override

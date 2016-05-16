@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Hide the status bar. For API 19 or above the immersive mode is enabled.
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -86,13 +87,13 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
-        //to hold the value after the evaluation of the expression
+        // The field to hold the current evaluation result.
         value_field = (TextView) findViewById(R.id.textView_value);
 
         // The mode button, for deg or rad modes.
         mode_button = (Button) findViewById(R.id.button_mode);
 
-        //for history
+        // History related objects
         historyView = (LinearLayout) findViewById(R.id.history_view);
         historyListView = (ListView) findViewById(R.id.history_list);
         historyList = new ArrayList<>();
@@ -102,8 +103,11 @@ public class MainActivity extends AppCompatActivity {
             FileOutputStream fos = openFileOutput(HISTORY_FILE,Context.MODE_APPEND);
             fos.close();
         } catch (IOException e) {}
+
         historyListView.setAdapter(historyAdapter);
-        initializeHistoryList();
+        initializeHistoryList(); // Initialize the list.
+
+        // Insert the selected value from history list directly to the expression at cursor.
         historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     clearExp();
                     evaluated = false;
                 }
-                exp.append(val_string);
+                exp.insert(cursor,val_string);
                 updateExpField();
                 cursor += val_string.length();
                 exp_field.setSelection(cursor);
@@ -121,21 +125,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //the expression field
+        // The expression field
         exp_field = (EditText) findViewById(R.id.expression_field);
         exp_field.setRawInputType(InputType.TYPE_CLASS_TEXT);
         exp_field.setTextIsSelectable(true); //for selecting text in the expression field
 
-        //for getting the cursor position
+        // Capture the cursor position if clicked
         exp_field.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cursor = exp_field.getSelectionStart();
-                evaluated = false;
+                if (!p.matcher(exp.toString()).find())
+                    evaluated = false;
             }
         });
 
-        //checking whether a previously destroyed instance is recreated or not
+        // Restore previous state, if any
         if (savedInstanceState != null) {
             //Restoring values of members from saved state
             exp = new StringBuilder(savedInstanceState.getString(EXP_KEY));
@@ -145,15 +150,17 @@ public class MainActivity extends AppCompatActivity {
             exp_field.setSelection(cursor);
             degreeMode = savedInstanceState.getBoolean(MODE_KEY);
         } else {
-            //initializing exp for new instance
+            // Initialize exp for new instance
             exp = new StringBuilder();
         }
 
+        // Display the current mode on the button.
         if (degreeMode)
             mode_button.setText(DEG_MODE);
         else
             mode_button.setText(RAD_MODE);
 
+        // Consume the long click to prevent keyboard from showing
         exp_field.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -175,12 +182,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        // Restore the full screen / immerse mode.
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else if (Build.VERSION.SDK_INT < 19){
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN);
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        // Save the history in file when stop.
         StringBuilder historyContent = new StringBuilder();
         for (Map<String,String> m : historyList) {
             historyContent.append(m.get(HIS_EXP_KEY));
@@ -203,19 +227,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // This method clears the history.
     public void clearHistory(View view) {
         historyList.clear();
         historyAdapter.notifyDataSetChanged();
     }
 
+    // This method enables / disables the history view.
     public void toppleHistoryView(View view) {
-
         if (historyView.getVisibility() == View.VISIBLE)
             historyView.setVisibility(View.GONE);
         else
             historyView.setVisibility(View.VISIBLE);
     }
 
+    // This methods changes the mode to degree or radian.
     public void toppleMode(View view) {
         degreeMode = !degreeMode;
         if (degreeMode)
@@ -226,14 +252,17 @@ public class MainActivity extends AppCompatActivity {
 
     //typing the values in the text area of the calculator
     public void typeEntry(View view) {
+        // Clear the expression if the result is "Infinity" or "NaN".
         if (evaluated && p.matcher(exp.toString()).find())
             clearExp();
+
+        // The work is distributed here.
         switch (view.getId()) {
-            case R.id.cancel_button:
+            case R.id.cancel_button: // Clear the expression
                 clearExp();
                 updateExpField();
                 break;
-            case R.id.back_button:
+            case R.id.back_button: // Backspace
                 if (cursor > 0) {
                     Element element = getPreviousElement2();
                     if (element == Element.UnaryOperators) {
@@ -242,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
                     erasePreviousElement();
                 }
                 break;
+            // -------------------------------------------
+            // Adding numbers
             case R.id.num0_button:
                 addNumber(Number.ZERO); break;
             case R.id.num1_button:
@@ -263,11 +294,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.num9_button:
                 addNumber(Number.NINE); break;
             // -------------------------------------------
+            // Adding math constants
             case R.id.pi_button:
                 addMathConst(MathConstant.PI); break;
             case R.id.e_button:
                 addMathConst(MathConstant.E); break;
             // -------------------------------------------
+            // Adding functions
             case R.id.recip_button:
                 addRecip(); break;
             case R.id.sqrt_button:
@@ -293,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.abs_button:
                 addUnaryOperator(UnaryOperator.ABS); break;
             // -------------------------------------------
+            // Adding binary operators
             case R.id.add_button:
                 addBinaryOperator(BinaryOperator.ADD); break;
             case R.id.sub_button:
@@ -306,6 +340,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.pow_button:
                 addBinaryOperator(BinaryOperator.POW); break;
             // ---------------------------------------------------------
+            // Other functionalities.
             case R.id.blanket_button:
                 addBlanket(); break;
             case R.id.eval_button:
@@ -322,11 +357,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+        // Place the cursor to its current position.
         exp_field.setSelection(cursor);
         if (!evaluated)
             partialEvaluate();
     }
 
+    // This method loads the history list from the HISTORY_FILE
     private void initializeHistoryList() {
         historyList.clear();
         BufferedReader br = null;
@@ -343,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
                 historyList.add(item);
             }
         } catch (IOException e) {
-
+            Toast.makeText(this,"Error loading history file.",Toast.LENGTH_SHORT).show();
         } finally {
             try {
                 if (br != null) br.close();
@@ -353,6 +390,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateHistoryList() {
+        // Update the history list by adding the current result,
+        // except for the "Infinity" and "NaN" cases.
+        if (p.matcher(Double.toString(result)).find())
+            return;
         Map<String,String> history = new HashMap<>();
         history.put(HIS_EXP_KEY,exp.toString());
         history.put(HIS_VAL_KEY,Double.toString(result));
@@ -360,22 +401,27 @@ public class MainActivity extends AppCompatActivity {
         historyAdapter.notifyDataSetChanged();
     }
 
+    // This method updates the expression field.
     private void updateExpField() {
         exp_field.setText(exp.toString());
     }
 
+    // This method inserts entry string to the expression.
     private void insertEntry(String entry) {
         exp.insert(cursor,entry);
         cursor += entry.length();
         updateExpField();
     }
 
+    // This method inserts entry character to the expression.
     private void insertEntry(char entry) {
         exp.insert(cursor,entry);
         cursor++;
         updateExpField();
     }
 
+    // This method inserts a character to a particular position.
+    // It is for the old parser, which is deprecated.
     @Deprecated
     private void insertEntryAt(int position, char entry) {
         exp.insert(position,entry);
@@ -383,12 +429,16 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
+    // This method inserts a string to a particular position.
+    // The only method that uses it is negate().
     private void insertEntryAt(int position, String entry) {
         exp.insert(position, entry);
         cursor += entry.length();
         updateExpField();
     }
 
+    // This method performs backspace by one character.
+    // It is for the old parser, which is deprecated.
     @Deprecated
     private void backSpace() {
         if (cursor == 0)
@@ -398,6 +448,8 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
+    // This method performs backspace by one character at the position specified.
+    // The only method that uses it is negate().
     private void backSpaceAt(int position) {
         if (position <= 0)
             return;
@@ -406,11 +458,13 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
+    // This method clears the expression
     private void clearExp() {
         exp.setLength(0);
         cursor = 0;
     }
 
+    // This method checks if the dot element can be added at the current position.
     private boolean isEligibleForDot() {
 
         for (int i = cursor-1; i >= 0; i--) {
@@ -425,14 +479,18 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // This method checks if the input element conforms the grammar
+    // at the current position.
     private boolean isEligible(Element element) {
         assert(cursor > 0);
         Rule rule = Rule.getRule(getPreviousElement());
         return rule.obeysRule(element);
     }
 
+    // This method returns the element which ends at the second previous character.
     private Element getPreviousElement2() {
-        assert(cursor > 0);
+        if (cursor < 2)
+            return null;
         int earliestIndex = cursor-1;
         for (int i = cursor-2; i >= 0; i--) {
             Element element = Element.getElement(exp.substring(i, cursor-1));
@@ -442,6 +500,7 @@ public class MainActivity extends AppCompatActivity {
         return Element.getElement(exp.substring(earliestIndex, cursor - 1));
     }
 
+    // This method returns the previous element counting from the current position.
     private Element getPreviousElement() {
         if (cursor == 0)
             return Element.Start;
@@ -454,6 +513,7 @@ public class MainActivity extends AppCompatActivity {
         return Element.getElement(exp.substring(earliestIndex,cursor));
     }
 
+    // Get the next element counting from the current position.
     private Element getNextElement() {
         int furtherestIndex = cursor;
         for (int i = cursor+1; i < exp.length(); i++) {
@@ -470,6 +530,7 @@ public class MainActivity extends AppCompatActivity {
             return Element.getElement(exp.substring(cursor,furtherestIndex));
     }
 
+    // This method evaluates the current expression if it's in correct format.
     private void partialEvaluate() {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             try {
@@ -483,11 +544,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //method for updating the text field with result
-    private void updateTextField(){
-
-    }
-
+    // This method performs the housekeeping functionality,
+    // e.g. updating history, showing the result, etc,
+    // when the "=" button is pressed.
     private void evaluate() {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             updateHistoryList();
@@ -502,6 +561,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // This method erases the next element, only used by editing binary operators.
     private void eraseNextElement() {
         int furtherestIndex = cursor;
         for (int i = cursor+1; i < exp.length(); i++) {
@@ -513,6 +573,7 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
+    // This method erases the previous element, and serves as the backspace.
     private void erasePreviousElement() {
         int earliestIndex = cursor;
         for (int i = cursor-1; i >= 0; i--) {
@@ -525,6 +586,7 @@ public class MainActivity extends AppCompatActivity {
         updateExpField();
     }
 
+    // This method adds an open/close blanket depending on the situation.
     private void addBlanket() {
         Element nextEle = getNextElement();
         int layer = 0;
@@ -546,6 +608,7 @@ public class MainActivity extends AppCompatActivity {
         evaluated = false;
     }
 
+    // This method adds a unary operator to the expression.
     private void addUnaryOperator(UnaryOperator op) {
         Rule prevRule = Rule.getRule(getPreviousElement());
         if (!prevRule.obeysRule(Element.UnaryOperators))
@@ -554,6 +617,9 @@ public class MainActivity extends AppCompatActivity {
         evaluated = false;
     }
 
+    // This method adds a binary operator to the expression.
+    // It detects if there is a binary operator ahead, and changes it to
+    // the specified one here if present.
     private void addBinaryOperator(BinaryOperator op) {
         if (cursor == 0)
             return;
@@ -574,6 +640,8 @@ public class MainActivity extends AppCompatActivity {
         evaluated = false;
     }
 
+    // This method adds the reciprocal. A multiplication operator is added
+    // before it if there is a number before.
     private void addRecip() {
         if (evaluated) clearExp();
         evaluated = false;
@@ -584,6 +652,7 @@ public class MainActivity extends AppCompatActivity {
             insertEntry(Number.ONE.symbol + BinaryOperator.DIV.symbol + "(");
     }
 
+    // This method adds a number to the expression.
     private void addNumber(Number number) {
         if (evaluated) clearExp();
         evaluated = false;
@@ -605,25 +674,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // This method adds a math constant. If a number is present before the current position,
+    // then a multiplication binary operator would be added as well.
     private void addMathConst(MathConstant mathConstant) {
         if (evaluated) clearExp();
         evaluated = false;
         Element nextEle = getNextElement();
         Rule rule = Rule.MathConst;
         Rule binRule = Rule.BinaryOperators;
-        if (isEligible(Element.BinaryOperators) && rule.obeysRule(nextEle))
+        if (isEligible(Element.BinaryOperators) && (rule.obeysRule(nextEle) || nextEle == Element.Null))
             insertEntry(BinaryOperator.MULT.symbol + mathConstant.symbol);
         else if (isEligible(Element.MathConst) && binRule.obeysRule(nextEle))
             insertEntry(mathConstant.symbol + BinaryOperator.MULT.symbol);
-        else if (isEligible(Element.MathConst))
+        else if (isEligible(Element.MathConst) && nextEle == Element.Null)
             insertEntry(mathConstant.symbol);
     }
 
+    // This method detects if there is already a negation sign before the number.
+    // It adds the negate sign if there is none, and removes it if there is one.
     private void negate() {
         evaluated = false;
         boolean negateDetected = false;
         int searchCursor = 0;
         char prevChar = (cursor > 0) ? exp.charAt(cursor-1) : 0;
+        // Scan from the cursor position backward to the beginning to find negation operator.
         for (int i = cursor-1; i >= 0; i--) {
             char currChar = exp.charAt(i);
             Element currEle = Element.getElement(currChar);
@@ -631,7 +705,7 @@ public class MainActivity extends AppCompatActivity {
             if (negateDetected) {
                 if (currEle != Element.OpenBlanket) {
                     negateDetected = false;
-                    searchCursor = i+1;
+                    searchCursor = i+2;
                     break;
                 }
                 searchCursor = i+1;
@@ -642,6 +716,10 @@ public class MainActivity extends AppCompatActivity {
             if (currEle == Element.Numbers || currEle == Element.Dot)
                 continue;
             if (currChar == '-') {
+                if (i == 0) {
+                    backSpaceAt(1);
+                    return;
+                }
                 negateDetected = true;
                 continue;
             }

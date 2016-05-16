@@ -3,8 +3,10 @@ package parserV2;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * This class consists of the unary operators used in the calculator.
+ */
 public enum UnaryOperator {
-	//doubt
 	NEAGTE("n", Precedence.Low, new UnaryComputable() {
 		@Override
 		public double compute(double d) {
