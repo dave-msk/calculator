@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     StringBuilder exp;
     int cursor = 0;
     boolean evaluated = false;
+    boolean degreeMode = true;
+    double result = 0;
     Pattern p = Pattern.compile(".*[a-zA-Z].*");
 
     //OnCreate method
@@ -199,14 +201,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         exp_field.setSelection(cursor);
+        if (!evaluated)
+            partialEvaluate();
     }
 
     private void updateExpField() {
         exp_field.setText(exp.toString());
-    }
-    //for displaying vallues in the text field
-    private void updateTextField(){
-
     }
 
     private void insertEntry(String entry) {
@@ -315,24 +315,27 @@ public class MainActivity extends AppCompatActivity {
             return Element.getElement(exp.substring(cursor,furtherestIndex));
     }
 
-    private void evaluate() {
+    private void partialEvaluate() {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             try {
-                double result = CalculatorParser.parse(exp.toString()).evaluate();
-
-                if (!Double.isInfinite(result) && !Double.isNaN(result))
-                    result = AppUtils.round(result);
-//---------------------------------------------------------------------------//------------------------------
-               // clearExp();
-               // exp.append(result);// memory leakage
-                //cursor = exp.length();
-                //updateExpField();
-                updateTextField();
-
-                evaluated = true;
+                result = CalculatorParser.parse(exp.toString(),degreeMode).evaluate();
+                value_field.setText(Double.toString(result));
             } catch (InvalidComputationException e) {
-                Toast.makeText(this,"Invalid computation. Please check the expression.",Toast.LENGTH_SHORT).show();
+
             }
+        } else {
+            value_field.setText("");
+        }
+    }
+
+    private void evaluate() {
+        if (CalculatorParser.hasCorrectFormat(exp.toString())) {
+            clearExp();
+            exp.append(result);
+            cursor = exp.length();
+            updateExpField();
+            value_field.setText("");
+            evaluated = true;
         } else {
             Toast.makeText(this, "Invalid format",Toast.LENGTH_SHORT).show();
         }

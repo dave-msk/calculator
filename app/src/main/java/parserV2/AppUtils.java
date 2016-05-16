@@ -11,6 +11,8 @@ public class AppUtils {
     public static final int MAXDECIMAL = 9;
 
     public static double round(double d) {
+        if (Double.isNaN(d) || Double.isInfinite(d))
+            return d;
         int digits = leadingDigits(d);
         int roundToDecimal = Math.min(MAXDIGIT-digits,MAXDECIMAL);
         double rounded =  BigDecimal.valueOf(d).setScale(roundToDecimal,BigDecimal.ROUND_HALF_UP).doubleValue();

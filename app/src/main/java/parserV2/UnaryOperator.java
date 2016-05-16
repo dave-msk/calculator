@@ -17,22 +17,40 @@ public enum UnaryOperator {
 			return Math.sqrt(d);
 		}
 	}),
-	SIN("sin", Precedence.High, new UnaryComputable() {
+	SIND("sin", Precedence.High, new UnaryComputable() {
 		@Override
 		public double compute(double d) {
 			return Math.sin(Math.toRadians(d));
 		}
 	}),
-	COS("cos", Precedence.High, new UnaryComputable() {
+	COSD("cos", Precedence.High, new UnaryComputable() {
 		@Override
 		public double compute(double d) {
 			return Math.cos(Math.toRadians(d));
 		}
 	}),
-	TAN("tan", Precedence.High, new UnaryComputable() {
+	TAND("tan", Precedence.High, new UnaryComputable() {
 		@Override
 		public double compute(double d) {
 			return Math.tan(Math.toRadians(d));
+		}
+	}),
+	SIN("sin", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.sin(d);
+		}
+	}),
+	COS("cos", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.cos(d);
+		}
+	}),
+	TAN("tan", Precedence.High, new UnaryComputable() {
+		@Override
+		public double compute(double d) {
+			return Math.tan(d);
 		}
 	}),
 	SINH("sinh", Precedence.High, new UnaryComputable() {

@@ -20,7 +20,7 @@ public class Expression {
 	}
 	
 	public Expression(double value) {
-		this.value = value;
+		this.value = AppUtils.round(value);
 		evaluated = true;
 	}
 	
@@ -29,7 +29,7 @@ public class Expression {
 			return value;
 		} else if (opb != null) {
             try {
-                value = opb.compute(l.evaluate(), r.evaluate());
+                value = AppUtils.round(opb.compute(l.evaluate(), r.evaluate()));
             } catch (InvalidComputationException e) {
                 throw e;
             } catch (Exception e) {
@@ -39,7 +39,7 @@ public class Expression {
 			return value;
 		} else {
             try {
-                value = opu.compute(l.evaluate());
+                value = AppUtils.round(opu.compute(l.evaluate()));
             } catch (InvalidComputationException e) {
                 throw e;
             } catch (Exception e) {
