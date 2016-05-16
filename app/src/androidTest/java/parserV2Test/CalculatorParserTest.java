@@ -14,6 +14,7 @@ public class CalculatorParserTest {
     }
 
     //test fail
+
     public void testHasCorrectFormat() throws Exception {
        boolean actual_value = CalculatorParser.hasCorrectFormat("2+3+4");
         boolean expected_value = true;

@@ -436,6 +436,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //method for updating the text field with result
+    private void updateTextField(){
+
+    }
+
     private void evaluate() {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             updateHistoryList();
