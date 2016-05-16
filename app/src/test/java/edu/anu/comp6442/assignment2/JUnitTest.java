@@ -20,7 +20,7 @@ public class JUnitTest {
     // testing of hasCorrectFormat method of CalculatorParser class
     @Test
     public void testHasCorrectFormat() throws Exception {
-        boolean actual_value = CalculatorParser.hasCorrectFormat("2+3");
+        boolean actual_value = CalculatorParser.hasCorrectFormat("-(-(-(-2)+sin(-3.25^4)^2))/5*log(2)+4/tan(-(-2))*3.427-6/(20+4)");
         boolean expected_value = true;
         assertEquals("Test failed", expected_value, actual_value);
     }
@@ -36,11 +36,14 @@ public class JUnitTest {
     //testing of the round() method of AppUtils
     @Test
     public void testRound() throws Exception {
-        double expected_value= 12.0;
-        double actual_value = AppUtils.round(12);
-        assertEquals("Test failed", expected_value, actual_value);
+        //testing of the first condition check isInfinity and isNaN check
+        double d = (1.0/0.0);
+        assertEquals("Test Failed",d, AppUtils.round(d));
+        double b = (0.0/0.0);
+        assertEquals("Test Failed",b, AppUtils.round(b));
+        //second branch test
+        double a = 0.1499999999999999944488848768742172978818416595458984375;
+        double expected_value = AppUtils.round(a);
+        assertEquals("Test Failed",expected_value,0.15);
     }
-
-
-
 }
