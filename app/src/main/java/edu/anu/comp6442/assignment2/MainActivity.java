@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DEG_MODE = "DEG";
     private static final String RAD_MODE = "RAD";
 
-    //Initialization
+    //Initializations
     LinearLayout historyView;
     ListView historyListView;
     EditText exp_field;
