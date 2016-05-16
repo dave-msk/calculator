@@ -37,6 +37,9 @@ public class JUnitTest {
     //testing of the round() method of AppUtils
     @Test
     public void testRound() throws Exception {
+        assertTrue(Double.toString(AppUtils.round(0.0 / 0.0)).equals("NaN"));
+        assertTrue(Double.toString(AppUtils.round(1.0/0.0)).equals("Infinity"));
+        assertTrue(Double.toString(AppUtils.round(0.0)).equals("0.0"));
         assertTrue(Double.toString(AppUtils.round(0.99999999999)).equals("1.0"));
     }
 }
