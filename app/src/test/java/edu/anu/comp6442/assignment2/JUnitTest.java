@@ -2,6 +2,7 @@ package edu.anu.comp6442.assignment2;
 
 import org.junit.Test;
 
+import parserV2.AppUtils;
 import parserV2.CalculatorParser;
 
 import static junit.framework.Assert.assertEquals;
@@ -22,9 +23,17 @@ public class JUnitTest {
         assertEquals("Test failed", expected_value, actual_value);
     }
 
+    @Test
     public void testIsNumeric() throws Exception {
         boolean actual_value = CalculatorParser.isNumeric("12.65");
         boolean expected_value = true;
+        assertEquals("Test failed", expected_value, actual_value);
+    }
+
+    @Test
+    public void testRound() throws Exception {
+        double expected_value= 12.0;
+        double actual_value = AppUtils.round(12);
         assertEquals("Test failed", expected_value, actual_value);
     }
 
