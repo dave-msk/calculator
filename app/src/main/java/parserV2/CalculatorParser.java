@@ -111,7 +111,7 @@ public class CalculatorParser {
 		// boolean accumulating = false;
 
 		StringBuilder currElementStr = new StringBuilder();
-        Element prevElement = Element.Start;
+        Element prevElement = Element.Start;//initially set to @start but gets updated by the rule
 
 		for (int i = 0; i < expStr.length(); i++) {
             if (furtherestIndex >= i)
