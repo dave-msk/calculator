@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
-import parserV2.AppUtils;
 import parserV2.BinaryOperator;
 import parserV2.CalculatorParser;
 import parserV2.Element;
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ListView historyList;
     EditText exp_field;
     TextView value_field; //for holding the value
+    String value; //for holding the value
     StringBuilder exp;
     int cursor = 0;
     boolean evaluated = false;
@@ -328,13 +328,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //method for updating the text field with result
+    private void updateTextField(){
+
+    }
+
     private void evaluate() {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
             clearExp();
             exp.append(result);
             cursor = exp.length();
             updateExpField();
-            value_field.setText("");
+            value_field.setText("");//not this
             evaluated = true;
         } else {
             Toast.makeText(this, "Invalid format",Toast.LENGTH_SHORT).show();
