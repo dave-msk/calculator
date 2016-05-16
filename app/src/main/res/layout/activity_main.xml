@@ -57,8 +57,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:textColor="@color/colorLightPurple"
-            android:background="@color/colorWhite"
-            android:onClick="toppleHistoryView"/>
+            android:onClick="toppleHistoryView"
+            style="?android:attr/borderlessButtonStyle"
+            />
 
         <Space
             android:layout_width="10dp"
@@ -74,7 +75,8 @@
             android:layout_toRightOf="@id/pad_space_middle"
             android:textColor="@color/colorLightPurple"
             android:background="@color/colorWhite"
-            android:onClick="toppleMode" />
+            android:onClick="toppleMode"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>
@@ -104,7 +106,8 @@
                     android:text="@string/cancel_button"
                     android:textSize="36sp"
                     android:id="@+id/cancel_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -113,7 +116,8 @@
                     android:text="@string/blankets_button"
                     android:textSize="24sp"
                     android:id="@+id/blanket_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -122,7 +126,8 @@
                     android:text="@string/pow_button"
                     android:textSize="30sp"
                     android:id="@+id/pow_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -131,7 +136,8 @@
                     android:text="@string/div_button"
                     android:textSize="30sp"
                     android:id="@+id/div_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
 
             <LinearLayout
@@ -147,7 +153,8 @@
                     android:text="@string/num7_button"
                     android:textSize="28sp"
                     android:id="@+id/num7_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -156,7 +163,8 @@
                     android:text="@string/num8_button"
                     android:textSize="28sp"
                     android:id="@+id/num8_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -165,7 +173,8 @@
                     android:text="@string/num9_button"
                     android:textSize="28sp"
                     android:id="@+id/num9_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -174,7 +183,8 @@
                     android:text="@string/mult_button"
                     android:textSize="30sp"
                     android:id="@+id/mult_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
 
             <LinearLayout
@@ -189,7 +199,8 @@
                     android:text="@string/num4_button"
                     android:textSize="28sp"
                     android:id="@+id/num4_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -198,7 +209,8 @@
                     android:text="@string/num5_button"
                     android:textSize="28sp"
                     android:id="@+id/num5_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -207,7 +219,8 @@
                     android:text="@string/num6_button"
                     android:textSize="28sp"
                     android:id="@+id/num6_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -216,7 +229,8 @@
                     android:text="@string/sub_button"
                     android:textSize="30sp"
                     android:id="@+id/sub_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
 
             <LinearLayout
@@ -231,7 +245,8 @@
                     android:text="@string/num1_button"
                     android:textSize="28sp"
                     android:id="@+id/num1_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -240,7 +255,8 @@
                     android:text="@string/num2_button"
                     android:textSize="28sp"
                     android:id="@+id/num2_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -249,7 +265,8 @@
                     android:text="@string/num3_button"
                     android:textSize="28sp"
                     android:id="@+id/num3_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -258,7 +275,8 @@
                     android:text="@string/add_button"
                     android:textSize="30sp"
                     android:id="@+id/add_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
 
             <LinearLayout
@@ -274,7 +292,8 @@
                     android:text="@string/dot_button"
                     android:textSize="28sp"
                     android:id="@+id/dot_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -283,7 +302,8 @@
                     android:text="@string/num0_button"
                     android:textSize="28sp"
                     android:id="@+id/num0_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -292,7 +312,8 @@
                     android:text="@string/neg_button"
                     android:textSize="28sp"
                     android:id="@+id/neg_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="0dp"
@@ -301,7 +322,8 @@
                     android:text="@string/eval_button"
                     android:textSize="30sp"
                     android:id="@+id/eval_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -313,13 +335,33 @@
             android:visibility="gone"
             android:id="@+id/history_view">
 
-            <ListView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="75"
-                android:id="@+id/history_list"
-                android:background="@color/colorWhite">
-            </ListView>
+                android:orientation="vertical">
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="86.67"
+                    android:id="@+id/history_list"
+                    android:background="@color/colorWhite">
+                </ListView>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="13.33"
+                    android:id="@+id/button_clear_history"
+                    android:text="@string/clear_history"
+                    android:background="@color/colorWhite"
+                    android:textColor="@color/colorLightPurple"
+                    android:onClick="clearHistory"/>
+
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -334,7 +376,8 @@
                     android:text="@string/div_button"
                     android:textSize="30sp"
                     android:id="@id/div_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="match_parent"
@@ -343,7 +386,8 @@
                     android:text="@string/mult_button"
                     android:textSize="30sp"
                     android:id="@id/mult_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="match_parent"
@@ -352,7 +396,8 @@
                     android:text="@string/sub_button"
                     android:textSize="30sp"
                     android:id="@id/sub_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="match_parent"
@@ -361,7 +406,8 @@
                     android:text="@string/add_button"
                     android:textSize="30sp"
                     android:id="@id/add_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
                 <Button
                     android:layout_width="match_parent"
@@ -370,7 +416,8 @@
                     android:text="@string/eval_button"
                     android:textSize="30sp"
                     android:id="@id/eval_button"
-                    android:onClick="typeEntry"/>
+                    android:onClick="typeEntry"
+                    style="?android:attr/borderlessButtonStyle"/>
 
             </LinearLayout>
 

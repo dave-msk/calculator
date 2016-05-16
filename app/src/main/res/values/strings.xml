@@ -36,6 +36,7 @@
     <string name="abs_button">abs</string>
     <string name="pi_button">PI</string>
     <string name="e_button">e</string>
+    <string name="clear_history">Clear History</string>
 
 
 </resources>

@@ -47,7 +47,7 @@ public class HistoryAdapter  extends ArrayAdapter<Map<String,String>>{
         }
 
         holder.exp_text.setText(list.get(position).get(keys[0]));
-        holder.value_text.setText(list.get(position).get(keys[1]));
+        holder.value_text.setText("=" + list.get(position).get(keys[1]));
         return convertView;
     }
 

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,10 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import historyAdapter.HistoryAdapter;
-import parserV2.AppUtils;
 import parserV2.BinaryOperator;
 import parserV2.CalculatorParser;
 import parserV2.Element;
@@ -82,15 +80,29 @@ public class MainActivity extends AppCompatActivity {
         historyListView = (ListView) findViewById(R.id.history_list);
         historyList = new ArrayList<>();
         historyAdapter = new HistoryAdapter(this,R.layout.row_view,historyList,new String[] {HIS_EXP_KEY,HIS_VAL_KEY});
-        File historyFile = new File(getFilesDir(),HISTORY_FILE);
-        if (!historyFile.exists())
-            try {
-                historyFile.createNewFile();
-            } catch (IOException e) {
-                Toast.makeText(this,"Failed to create history file.",Toast.LENGTH_SHORT).show();
-            }
+        // Make sure the history file exists.
+        try {
+            FileOutputStream fos = openFileOutput(HISTORY_FILE,Context.MODE_APPEND);
+            fos.close();
+        } catch (IOException e) {}
         historyListView.setAdapter(historyAdapter);
         initializeHistoryList();
+        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String val_string = historyList.get(position).get(HIS_VAL_KEY);
+                if (evaluated) {
+                    clearExp();
+                    evaluated = false;
+                }
+                exp.append(val_string);
+                updateExpField();
+                cursor += val_string.length();
+                exp_field.setSelection(cursor);
+
+                partialEvaluate();
+            }
+        });
 
         //the expression field
         exp_field = (EditText) findViewById(R.id.expression_field);
@@ -127,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //getting the state back
+    // Saving the current state to pass information
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -135,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt(CURSOR_KEY, cursor);
         outState.putString(EXP_KEY, exp.toString());
         outState.putBoolean(STATE_KEY, evaluated);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
@@ -160,6 +178,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Failed saving history.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void clearHistory(View view) {
+        historyList.clear();
+        historyAdapter.notifyDataSetChanged();
     }
 
     public void toppleHistoryView(View view) {
@@ -291,9 +314,10 @@ public class MainActivity extends AppCompatActivity {
                 if (line.isEmpty())
                     continue;
                 String[] tokens = line.split(",");
-                HashMap<String,String> item = new HashMap<>();
+                Map<String,String> item = new HashMap<>();
                 item.put(HIS_EXP_KEY,tokens[0]);
                 item.put(HIS_VAL_KEY,tokens[1]);
+                historyList.add(item);
             }
         } catch (IOException e) {
 
