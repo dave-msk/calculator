@@ -3,6 +3,7 @@ package edu.anu.comp6442.assignment2;
 import org.junit.Test;
 
 import parserV2.CalculatorParser;
+import parserV2.Expression;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -16,8 +17,8 @@ public class JUnitTest {
     }
     @Test
     public void testParse() throws Exception {
-
-        
+        Expression expected_value = CalculatorParser.parse("1", true);
+        assertEquals("Test failed",expected_value, CalculatorParser.parse("1",true));
     }
     @Test
     public void testHasCorrectFormat() throws Exception {
