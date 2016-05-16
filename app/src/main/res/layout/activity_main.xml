@@ -60,14 +60,22 @@
             android:background="@color/colorWhite"
             android:onClick="toppleHistoryView"/>
 
-        <ImageButton
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:id="@+id/pad_space_middle"
+            android:layout_toRightOf="@id/button_history"/>
+
+        <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ic_rotation_icon"
-            android:id="@+id/rotation_button"
-            android:onClick="typeEntry"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="match_parent"
+            android:id="@+id/button_mode"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/pad_space_middle"
+            android:textColor="@color/colorLightPurple"
+            android:background="@color/colorWhite"
+            android:onClick="toppleMode" />
+
 
     </RelativeLayout>
 

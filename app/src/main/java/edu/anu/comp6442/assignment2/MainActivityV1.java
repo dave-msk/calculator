@@ -71,9 +71,6 @@ public class MainActivityV1 extends AppCompatActivity {
                 clearExp();
                 updateExpField();
                 break;
-            case R.id.rotation_button:
-
-
             case R.id.back_button:
                 if (cursor > 0)
                     backSpace();

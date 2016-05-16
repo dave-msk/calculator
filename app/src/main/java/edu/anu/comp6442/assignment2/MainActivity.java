@@ -2,18 +2,32 @@
 //Assignment 2 COMP6442
 package edu.anu.comp6442.assignment2;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
+import historyAdapter.HistoryAdapter;
 import parserV2.AppUtils;
 import parserV2.BinaryOperator;
 import parserV2.CalculatorParser;
@@ -29,14 +43,22 @@ public class MainActivity extends AppCompatActivity {
     private static final String CURSOR_KEY = "edu.anu.comp6442.assignment2.CURSORKEY";
     private static final String EXP_KEY = "edu.anu.comp6442.assignment2.EXPKEY";
     private static final String STATE_KEY = "edu.anu.comp6442.assignment2.STATEKEY";
-    private static final String HISTORY_KEY = "edu.anu.comp6442.assignment2.HISTORYKEY";
+    private static final String MODE_KEY = "edu.anu.comp6442.assignment2.MODEKEY";
+    private static final String HISTORY_FILE = "edu.anu.comp6442.assignment2.HISTORY_FILE.txt";
+    private static final String HIS_EXP_KEY = "edu.anu.comp6442.assignment2.HIS_EXP_KEY";
+    private static final String HIS_VAL_KEY = "edu.anu.comp6442.assignment2.HIS_VAL_KEY";
+    private static final String DEG_MODE = "DEG";
+    private static final String RAD_MODE = "RAD";
 
     //Initialization
     LinearLayout historyView;
-    ListView historyList;
+    ListView historyListView;
     EditText exp_field;
     TextView value_field; //for holding the value
+    Button mode_button;
     StringBuilder exp;
+    List<Map<String,String>> historyList;
+    HistoryAdapter historyAdapter;
     int cursor = 0;
     boolean evaluated = false;
     boolean degreeMode = true;
@@ -52,9 +74,23 @@ public class MainActivity extends AppCompatActivity {
         //to hold the value after the evaluation of the expression
         value_field = (TextView) findViewById(R.id.textView_value);
 
+        // The mode button, for deg or rad modes.
+        mode_button = (Button) findViewById(R.id.button_mode);
+
         //for history
         historyView = (LinearLayout) findViewById(R.id.history_view);
-        historyList = (ListView) findViewById(R.id.history_list);
+        historyListView = (ListView) findViewById(R.id.history_list);
+        historyList = new ArrayList<>();
+        historyAdapter = new HistoryAdapter(this,R.layout.row_view,historyList,new String[] {HIS_EXP_KEY,HIS_VAL_KEY});
+        File historyFile = new File(getFilesDir(),HISTORY_FILE);
+        if (!historyFile.exists())
+            try {
+                historyFile.createNewFile();
+            } catch (IOException e) {
+                Toast.makeText(this,"Failed to create history file.",Toast.LENGTH_SHORT).show();
+            }
+        historyListView.setAdapter(historyAdapter);
+        initializeHistoryList();
 
         //the expression field
         exp_field = (EditText) findViewById(R.id.expression_field);
@@ -78,10 +114,16 @@ public class MainActivity extends AppCompatActivity {
             evaluated = savedInstanceState.getBoolean(STATE_KEY);
             updateExpField();
             exp_field.setSelection(cursor);
+            degreeMode = savedInstanceState.getBoolean(MODE_KEY);
         } else {
             //initializing exp for new instance
             exp = new StringBuilder();
         }
+
+        if (degreeMode)
+            mode_button.setText(DEG_MODE);
+        else
+            mode_button.setText(RAD_MODE);
 
     }
 
@@ -89,9 +131,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putBoolean(MODE_KEY,degreeMode);
         outState.putInt(CURSOR_KEY, cursor);
         outState.putString(EXP_KEY, exp.toString());
         outState.putBoolean(STATE_KEY, evaluated);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        StringBuilder historyContent = new StringBuilder();
+        for (Map<String,String> m : historyList) {
+            historyContent.append(m.get(HIS_EXP_KEY));
+            historyContent.append(',');
+            historyContent.append(m.get(HIS_VAL_KEY));
+            historyContent.append('\n');
+        }
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(HISTORY_FILE, Context.MODE_PRIVATE);
+            fos.write(historyContent.toString().trim().getBytes());
+        } catch (IOException e) {
+            Toast.makeText(this,"Failed saving history.",Toast.LENGTH_SHORT).show();
+        } finally {
+            try {
+                if (fos != null) fos.close();
+            } catch (IOException e) {
+                Toast.makeText(this, "Failed saving history.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void toppleHistoryView(View view) {
@@ -100,6 +168,14 @@ public class MainActivity extends AppCompatActivity {
             historyView.setVisibility(View.GONE);
         else
             historyView.setVisibility(View.VISIBLE);
+    }
+
+    public void toppleMode(View view) {
+        degreeMode = !degreeMode;
+        if (degreeMode)
+            mode_button.setText(DEG_MODE);
+        else
+            mode_button.setText(RAD_MODE);
     }
 
     //typing the values in the text area of the calculator
@@ -203,6 +279,38 @@ public class MainActivity extends AppCompatActivity {
         exp_field.setSelection(cursor);
         if (!evaluated)
             partialEvaluate();
+    }
+
+    private void initializeHistoryList() {
+        historyList.clear();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(openFileInput(HISTORY_FILE)));
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.isEmpty())
+                    continue;
+                String[] tokens = line.split(",");
+                HashMap<String,String> item = new HashMap<>();
+                item.put(HIS_EXP_KEY,tokens[0]);
+                item.put(HIS_VAL_KEY,tokens[1]);
+            }
+        } catch (IOException e) {
+
+        } finally {
+            try {
+                if (br != null) br.close();
+            } catch (IOException e) {}
+        }
+        historyAdapter.notifyDataSetChanged();
+    }
+
+    private void updateHistoryList() {
+        Map<String,String> history = new HashMap<>();
+        history.put(HIS_EXP_KEY,exp.toString());
+        history.put(HIS_VAL_KEY,Double.toString(result));
+        historyList.add(history);
+        historyAdapter.notifyDataSetChanged();
     }
 
     private void updateExpField() {
@@ -330,6 +438,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void evaluate() {
         if (CalculatorParser.hasCorrectFormat(exp.toString())) {
+            updateHistoryList();
             clearExp();
             exp.append(result);
             cursor = exp.length();
