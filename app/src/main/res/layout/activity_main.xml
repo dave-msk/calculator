@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--LinearLayout a view group where each child view is put in a vertical orientation  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +8,7 @@
     tools:context=".MainActivity"
     android:id="@+id/main_layout">
 
+    <!--EditText, a view object with resource name expression_field-->
     <EditText
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,7 +23,7 @@
         android:gravity="end"
         android:inputType="none"
         android:textIsSelectable="true"/>
-
+    <!--TextView, a view object with resource name textView_value-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -29,19 +31,20 @@
         android:textSize="20sp"
         android:height="0dp"
         android:layout_weight="11.52" />
-
+    <!--RelativeLayout view group under LinearLayout view group-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7.5"
         android:gravity="center_vertical">
-
+        <!--Space, a lightweight view subclass used for creating space-->
         <Space
             android:layout_width="16dp"
             android:layout_height="match_parent"
             android:id="@+id/back_button_pad"
             android:layout_alignParentRight="true"/>
 
+        <!--ImageButton, a view object with resource name back_button, for backspace button-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,6 +54,7 @@
             android:layout_toLeftOf="@id/back_button_pad"
              />
 
+        <!--Button, a view object with resource name button_history, for displaying history when clicked-->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -63,13 +67,13 @@
             android:onClick="toppleHistoryView"
             style="?android:attr/borderlessButtonStyle"
             />
-
+        <!--Space, a lightweight view subclass used for creating space-->
         <Space
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:id="@+id/pad_space_middle"
             android:layout_toRightOf="@id/button_history"/>
-
+        <!--Button, a view object with resource name button_mode-->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -83,25 +87,25 @@
 
 
     </RelativeLayout>
-
+    <!--Another RelativeLayout view group under LinearLayout view group for the calculator keypad-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="56.4"
         android:gravity="center_vertical">
-
+        <!--LinerLayout view group under previous RelativeLayout view group-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <!--LinearLayout view group for placing the first row of view objects-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="11.28">
 
-
+                <!--Button, view object with resource name cancel_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -111,7 +115,7 @@
                     android:id="@+id/cancel_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name blankets_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -121,7 +125,7 @@
                     android:id="@+id/blanket_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name pow_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -131,7 +135,7 @@
                     android:id="@+id/pow_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name div_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -142,13 +146,13 @@
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
-
+            <!--LinearLayout view group for placing the second row of view objects-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="11.28">
-
+                <!--Button, view object with resource name num7_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -158,7 +162,7 @@
                     android:id="@+id/num7_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name num8_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -168,7 +172,7 @@
                     android:id="@+id/num8_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name num9_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -178,7 +182,7 @@
                     android:id="@+id/num9_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name mult_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -189,12 +193,13 @@
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
-
+            <!--LinearLayout view group for placing the third row of view objects-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="11.28">
+                <!--Button, view object with resource name num4_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -204,7 +209,7 @@
                     android:id="@+id/num4_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name num5_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -214,7 +219,7 @@
                     android:id="@+id/num5_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name num6_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -224,7 +229,7 @@
                     android:id="@+id/num6_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name sub_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -235,12 +240,13 @@
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
-
+            <!--LinearLayout view group for placing the fourth row of view objects-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="11.28">
+                <!--Button, view object with resource name num1_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -250,7 +256,7 @@
                     android:id="@+id/num1_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name num2_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -260,7 +266,7 @@
                     android:id="@+id/num2_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name num3_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -270,7 +276,7 @@
                     android:id="@+id/num3_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name add_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -281,13 +287,13 @@
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
             </LinearLayout>
-
+            <!--LinearLayout view group for placing the fifth row of view objects-->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="11.28">
-
+                <!--Button, view object with resource name dot_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -297,7 +303,7 @@
                     android:id="@+id/dot_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name num0_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -307,7 +313,7 @@
                     android:id="@+id/num0_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name neg_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -317,7 +323,7 @@
                     android:id="@+id/neg_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name eval_button-->
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -330,20 +336,20 @@
             </LinearLayout>
 
         </LinearLayout>
-
+        <!--LinearLayout view group for history view-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:visibility="gone"
             android:id="@+id/history_view">
-
+            <!--LinearLayout view group for holding the ListView container-->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="75"
                 android:orientation="vertical">
-
+                <!--ListView a view to display history in a list format-->
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -351,7 +357,7 @@
                     android:id="@+id/history_list"
                     android:background="@color/colorWhite">
                 </ListView>
-
+                <!--Button, a view object for deleting history; resource name: button_clear_history-->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -365,13 +371,13 @@
             </LinearLayout>
 
 
-
+            <!--LinearLayout view group for operator buttons -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="25"
                 android:orientation="vertical">
-
+                <!--Button, view object with resource name div_button, used for division purpose-->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -381,7 +387,7 @@
                     android:id="@id/div_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name mult_button, used for multiplication purpose-->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -391,7 +397,7 @@
                     android:id="@id/mult_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name sub_button, used for subtraction purpose-->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -401,7 +407,7 @@
                     android:id="@id/sub_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name add_button, used for addition purpose-->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -411,7 +417,7 @@
                     android:id="@id/add_button"
                     android:onClick="typeEntry"
                     style="?android:attr/borderlessButtonStyle"/>
-
+                <!--Button, view object with resource name eval_button, used for evaluation purpose-->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

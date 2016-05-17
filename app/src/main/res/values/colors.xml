@@ -3,8 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <!--background color of button_mode-->
     <color name="colorWhite">#FFFFFF</color>
+    <!--text color of the history button-->
     <color name="colorLightPurple">#696fbc</color>
+    <!--text color of value in history-->
     <color name="colorGreen">#00c050</color>
+    <!--text color of expression in history-->
     <color name="colorGray">#777777</color>
 </resources>

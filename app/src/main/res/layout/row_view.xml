@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--LinearLayout a view group where each child view is put in a vertical orientation  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!--TextView, a view object with resource name exp_field, for displaying the expressions in history-->
     <TextView
         android:id="@+id/exp_field"
         android:layout_width="match_parent"
@@ -11,7 +12,7 @@
         android:textSize="20sp"
         android:textColor="@color/colorGray"
         android:gravity="end"/>
-
+    <!--TextView, a view object with resource name value_field, for displaying the value of the expression in history-->
     <TextView
         android:id="@+id/value_field"
         android:layout_width="match_parent"
