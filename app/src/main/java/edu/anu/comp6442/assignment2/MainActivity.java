@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity {
                 addUnaryOperator(UnaryOperator.SIG); break;
             case R.id.abs_button:
                 addUnaryOperator(UnaryOperator.ABS); break;
-            // -------------------------------------------
+            // --------------------
             // Adding binary operators to the operands
             case R.id.add_button:
                 addBinaryOperator(BinaryOperator.ADD); break;
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.blanket_button:
                 addBlanket(); break;
             case R.id.eval_button:
-                evaluate(); break;//-----------------//-------------------
+                evaluate(); break;
             case R.id.neg_button:
                 negate(); break;
             case R.id.dot_button:
