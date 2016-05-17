@@ -36,6 +36,12 @@ import parserV2.Number;
 import parserV2.Rule;
 import parserV2.UnaryOperator;
 
+/**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String CURSOR_KEY = "edu.anu.comp6442.assignment2.CURSORKEY";

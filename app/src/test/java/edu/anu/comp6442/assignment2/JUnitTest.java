@@ -9,6 +9,10 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ *
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class JUnitTest {

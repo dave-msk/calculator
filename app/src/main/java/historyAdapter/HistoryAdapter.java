@@ -13,6 +13,10 @@ import java.util.Map;
 import edu.anu.comp6442.assignment2.R;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ *
  * This class defines an adapter in used in the history list.
  */
 public class HistoryAdapter extends ArrayAdapter<Map<String,String>>{

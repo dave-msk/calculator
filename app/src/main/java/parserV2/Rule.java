@@ -6,6 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ *
  * This class is a set of grammars of the expression.
  */
 public enum Rule {

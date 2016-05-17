@@ -1,6 +1,10 @@
 package parserV2;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ *
  * This class defines an expression using a binary tree.
  */
 public class Expression {

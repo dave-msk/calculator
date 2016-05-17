@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
  * This enum class defines the binary operators in the calculator.
  */
 

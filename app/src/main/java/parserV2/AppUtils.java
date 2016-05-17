@@ -3,6 +3,9 @@ package parserV2;
 import java.math.BigDecimal;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
  * This is a helper class that consists of some helper methods like rounding.
  */
 public final class AppUtils {

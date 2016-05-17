@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ *
  * This class consists of the unary operators used in the calculator.
  */
 public enum UnaryOperator {

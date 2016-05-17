@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ *
  * This enum class defines the elements in the expression.
  * The elements would be used to check the eligibility of insertion and deletion.
  */
