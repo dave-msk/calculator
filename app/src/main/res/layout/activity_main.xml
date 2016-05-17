@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--/**
+ * COMP6442 - Software Construction
+ * Assignment 2 - Calculator
+ * Authors: Siu Kei, Muk & Snigdha Brahma
+ */-->
 <!--Vertical Layout of the calculator-->
 <!--LinearLayout a view group where each child view is put in a vertical orientation  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
