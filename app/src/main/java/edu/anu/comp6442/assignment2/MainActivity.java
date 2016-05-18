@@ -397,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateHistoryList() {
         // Update the history list by adding the current result,
         // except for the "Infinity" and "NaN" cases.
-        if (p.matcher(Double.toString(result)).find())
+        if (Double.isInfinite(result) || Double.isNaN(result))
             return;
         Map<String,String> history = new HashMap<>();
         history.put(HIS_EXP_KEY,exp.toString());

@@ -21,11 +21,7 @@ public final class AppUtils {
         int digits = leadingDigits(d);
         int roundToDecimal = Math.min(MAXDIGIT-digits,MAXDECIMAL);
         double rounded =  BigDecimal.valueOf(d).setScale(roundToDecimal,BigDecimal.ROUND_HALF_UP).doubleValue();
-        if (Math.abs(rounded) > Math.abs(d))
-            return rounded;
-        else if (Math.abs(rounded - d)*Math.pow(10, roundToDecimal) < .1)
-            return rounded;
-        return d;
+        return rounded;
     }
 
 
