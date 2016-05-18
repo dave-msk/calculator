@@ -616,9 +616,10 @@ public class MainActivity extends AppCompatActivity {
     // This method adds a unary operator to the expression.
     private void addUnaryOperator(UnaryOperator op) {
         Rule prevRule = Rule.getRule(getPreviousElement());
-        if (!prevRule.obeysRule(Element.UnaryOperators))
-            return;
-        insertEntry(op.symbol+"(");
+        if (prevRule.obeysRule(Element.UnaryOperators))
+            insertEntry(op.symbol+"(");
+        else if (prevRule.obeysRule(Element.BinaryOperators))
+            insertEntry("*" + op.symbol + "(");
         evaluated = false;
     }
 
