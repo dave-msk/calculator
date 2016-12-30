@@ -1,3 +1,10 @@
+/* Copyright (C) 2016 Siu-Kei Muk, Snigdha Brahma
+ * All rights reserved.
+ *
+ * This software may be modified and distributed under the terms
+ * of the BSD license.  See the LICENSE file for details.
+ */
+
 package calculatorParser;
 
 public class TestParser {
@@ -8,15 +15,5 @@ public class TestParser {
 			Expression exp = CalculatorParser.parse(expStr);
 			System.out.println("ans = " + exp.evaluate());
 		}
-		/*	
-		System.out.println(CalculatorParser.hasCorrectFormat(expStr));
-		System.out.println(expStr);
-		List<String> components = CalculatorParser.flatSplit(expStr);
-		components.stream().forEach(System.out::print);
-		System.out.println();
-		System.out.println(originalStr);
-		components.stream().forEach(System.out::println);
-		System.out.println(Double.parseDouble(".2"));
-		*/
 	}
 }
